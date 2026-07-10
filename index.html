@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lobbyist — Legislative Advocacy Made Simple</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #1B365D;
+      --accent: #E24B4A;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --bg-light: #F9F6F1;
+      --surface: #FFFFFF;
+      --text-primary: #1F2937;
+      --text-secondary: #6B7280;
+      --border: #E5E7EB;
+      --border-strong: #D1D5DB;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* HEADER */
+    .header {
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .role-selector {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      background: var(--surface);
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    /* BREAKING ALERT */
+    .breaking-alert {
+      background: #FEE2E2;
+      border: 1px solid #FECACA;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .breaking-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .breaking-badge {
+      background: var(--danger);
+      color: white;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breaking-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      flex: 1;
+      margin: 0;
+    }
+
+    .breaking-time {
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .breaking-body {
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .breaking-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 13px;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .breaking-meta span {
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .breaking-action {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* METRICS */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* SECTION */
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 2rem 0 1rem 0;
+      color: var(--primary);
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    /* BILLS LIST */
+    .bills-list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .bill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .bill-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .bill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .bill-info h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      color: var(--text-primary);
+    }
+
+    .bill-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 0.25rem;
+    }
+
+    .bill-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .status-breaking {
+      background: #FEE2E2;
+      color: var(--danger);
+    }
+
+    .status-action {
+      background: #FEE2E2;
+      color: var(--danger);
+    }
+
+    .status-alert {
+      background: #FEF3C7;
+      color: #D97706;
+    }
+
+    .status-tracking {
+      background: #DBEAFE;
+      color: #0284C7;
+    }
+
+    .status-done {
+      background: #DCFCE7;
+      color: var(--success);
+    }
+
+    .bill-summary {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .impact-item {
+      font-size: 13px;
+    }
+
+    .impact-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      font-size: 12px;
+    }
+
+    .impact-value {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .bill-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* BUTTONS */
+    button, .btn {
+      padding: 0.6rem 1rem;
+      font-size: 13px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #D63C39;
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      background: #F3F4F6;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      margin-bottom: 2rem;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .timeline-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .timeline-content {
+      flex: 1;
+    }
+
+    .timeline-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+    }
+
+    .timeline-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .template-box {
+      background: #F9F6F1;
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 1rem;
+      margin: 0.75rem 0;
+    }
+
+    .template-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .template-text {
+      font-size: 13px;
+      color: var(--text-primary);
+      font-family: "Monaco", "Menlo", monospace;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .modal-header h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      color: var(--text-primary);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+      font-family: "Monaco", "Menlo", monospace;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(226, 75, 74, 0.1);
+    }
+
+    .delegate-card {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .delegate-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .delegate-title {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .delegate-contact {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .delegate-contact a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .delegate-contact a:hover {
+      text-decoration: underline;
+    }
+
+    .delegate-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .delegate-actions button {
+      flex: 1;
+      font-size: 12px;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .contacted-badge {
+      background: var(--success);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      float: right;
+    }
+
+    /* COMMUNITY */
+    .community-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+
+    .community-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .community-icon {
+      font-size: 28px;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+    }
+
+    .community-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .community-card p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-button {
+      padding: 0.75rem 1rem;
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      position: relative;
+      bottom: -1px;
+    }
+
+    .tab-button.active {
+      color: var(--text-primary);
+      border-bottom-color: var(--accent);
+    }
+
+    .tab-button:hover {
+      color: var(--text-primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* FILTERS */
+    .filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-tag {
+      padding: 0.4rem 0.8rem;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+
+    .filter-tag.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .filter-tag:hover {
+      border-color: var(--accent);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+
+      .impact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bill-header {
+        flex-direction: column;
+      }
+
+      .breaking-action {
+        flex-direction: column;
+      }
+
+      button, .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- CONTACT MODAL -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Contact your delegates</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div id="modalStep1" class="modal-step">
+        <div class="form-group">
+          <label>What's your ZIP code?</label>
+          <input type="text" id="zipCode" placeholder="Enter your ZIP code" maxlength="5" />
+          <small style="color: var(--text-secondary); margin-top: 0.25rem; display: block;">We'll find your state representatives</small>
+        </div>
+        <button class="btn btn-primary" onclick="findDelegates()" style="width: 100%;">Find my delegates</button>
+      </div>
+
+      <div id="modalStep2" class="modal-step" style="display: none;">
+        <div style="margin-bottom: 1.5rem;">
+          <h3 style="font-size: 14px; margin-bottom: 1rem;">Your state representatives for <span id="zipDisplay"></span>:</h3>
+          <div id="delegatesList"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Your name</label>
+          <input type="text" id="userName" placeholder="Your full name" />
+        </div>
+
+        <div class="form-group">
+          <label>Your email</label>
+          <input type="email" id="userEmail" placeholder="your@email.com" />
+        </div>
+
+        <div class="form-group">
+          <label>Your business/organization</label>
+          <input type="text" id="userBusiness" placeholder="Restaurant name, business, etc." />
+        </div>
+
+        <div class="form-group">
+          <label>Message (edit as needed)</label>
+          <textarea id="messageTemplate"></textarea>
+        </div>
+
+        <div class="delegate-actions" style="flex-direction: column;">
+          <button class="btn btn-primary" onclick="sendMessage()">
+            <i class="fas fa-envelope"></i> Send via email
+          </button>
+          <button class="btn btn-secondary" onclick="copyMessage()">
+            <i class="fas fa-copy"></i> Copy message
+          </button>
+        </div>
+
+        <button class="btn btn-secondary" onclick="backToStep1()" style="width: 100%; margin-top: 1rem;">Back</button>
+      </div>
+
+      <div id="modalStep3" class="modal-step" style="display: none; text-align: center;">
+        <div style="margin-bottom: 1.5rem;">
+          <i class="fas fa-check" style="font-size: 48px; color: var(--success); margin-bottom: 1rem; display: block;"></i>
+          <h3 style="color: var(--success); margin-bottom: 0.5rem;">Message sent!</h3>
+          <p style="color: var(--text-secondary);">Your message has been delivered to your delegates. Great work!</p>
+        </div>
+        <button class="btn btn-primary" onclick="closeModal()" style="width: 100%;">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>Lobbyist</h1>
+      <p>Know what's coming. Know what to do.</p>
+      <div class="header-controls">
+        <select class="role-selector" id="stateFilter">
+          <option value="VA">Virginia</option>
+          <option value="MD">Maryland</option>
+          <option value="NC">North Carolina</option>
+          <option value="TX">Texas</option>
+          <option value="CA">California</option>
+        </select>
+        <select class="role-selector" id="industryFilter">
+          <option value="">All industries</option>
+          <option value="restaurants">Restaurants</option>
+          <option value="retail">Retail</option>
+          <option value="childcare">Childcare</option>
+          <option value="construction">Construction</option>
+          <option value="hospitality">Hospitality</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BREAKING NEWS -->
+    <div id="breakingAlert" class="breaking-alert" style="display: none;">
+      <div class="breaking-header">
+        <span class="breaking-badge">
+          <i class="fas fa-exclamation-triangle"></i> Breaking
+        </span>
+        <h2 class="breaking-title" id="breakingTitle"></h2>
+        <span class="breaking-time" id="breakingTime"></span>
+      </div>
+      <div class="breaking-body" id="breakingBody"></div>
+      <div class="breaking-meta" id="breakingMeta"></div>
+      <div class="breaking-action">
+        <button class="btn btn-primary" id="breakingAction">
+          <i class="fas fa-envelope"></i> Take action now
+        </button>
+        <button class="btn btn-secondary" id="breakingDetails">
+          See full details
+        </button>
+      </div>
+    </div>
+
+    <!-- METRICS -->
+    <div class="metrics" id="metricsContainer"></div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-button active" onclick="switchTab('overview')">Overview</button>
+      <button class="tab-button" onclick="switchTab('bills')">Bills affecting you</button>
+      <button class="tab-button" onclick="switchTab('action')">Action plan</button>
+    </div>
+
+    <!-- OVERVIEW TAB -->
+    <div id="overview" class="tab-content active">
+      <div class="section-title">What's happening now</div>
+      <div id="overviewContent"></div>
+    </div>
+
+    <!-- BILLS TAB -->
+    <div id="bills" class="tab-content">
+      <div class="filters" id="filterContainer"></div>
+      <div id="billsList" class="bills-list"></div>
+    </div>
+
+    <!-- ACTION PLAN TAB -->
+    <div id="action" class="tab-content">
+      <div class="section-title">This week's action items</div>
+      <div class="timeline" id="actionTimeline"></div>
+    </div>
+
+    <!-- COMMUNITY -->
+    <div class="section-title">You're not fighting alone</div>
+    <div class="community-grid">
+      <div class="community-card">
+        <div class="community-icon"><i class="fas fa-users"></i></div>
+        <h3>Find your peers</h3>
+        <p>Connect with others in your industry facing the same bills</p>
+      </div>
+      <div class="community-card">
+        <div class="community-icon"><i class="fas fa-comments"></i></div>
+        <h3>Group coordination</h3>
+        <p>Coordinate advocacy messages and strategy together</p>
+      </div>
+      <div class="community-card">
+        <div class="community-icon"><i class="fas fa-book"></i></div>
+        <h3>Learn how to advocate</h3>
+        <p>Templates, scripts, and strategies that actually work</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="bills-data.js"></script>
+  <script>
+    let selectedIndustry = '';
+    let selectedState = 'VA';
+    let selectedBillForContact = null;
+    let contactedDelegates = JSON.parse(localStorage.getItem('contactedDelegates')) || {};
+
+    // Mock delegate data by ZIP code
+    const DELEGATES_BY_ZIP = {
+      '22201': [ // Arlington
+        { name: 'Del. Kala Kelley', chamber: 'House', district: '34', email: 'kkelley@house.virginia.gov', phone: '(804) 698-1034' },
+        { name: 'Del. Rip Sullivan', chamber: 'House', district: '48', email: 'rsullivan@house.virginia.gov', phone: '(804) 698-1048' },
+        { name: 'Sen. Barbara Favola', chamber: 'Senate', district: '31', email: 'bfavola@senate.virginia.gov', phone: '(804) 698-7531' }
+      ],
+      '22202': [ // Arlington
+        { name: 'Del. Kala Kelley', chamber: 'House', district: '34', email: 'kkelley@house.virginia.gov', phone: '(804) 698-1034' },
+        { name: 'Sen. Barbara Favola', chamber: 'Senate', district: '31', email: 'bfavola@senate.virginia.gov', phone: '(804) 698-7531' }
+      ],
+      '22203': [ // Arlington
+        { name: 'Del. Alfonso Lopez', chamber: 'House', district: '49', email: 'alopez@house.virginia.gov', phone: '(804) 698-1049' },
+        { name: 'Sen. Barbara Favola', chamber: 'Senate', district: '31', email: 'bfavola@senate.virginia.gov', phone: '(804) 698-7531' }
+      ]
+    };
+
+    // Initialize the dashboard
+    function init() {
+      renderMetrics();
+      renderBreakingAlert();
+      renderBills();
+      renderActionPlan();
+      renderFilters();
+
+      document.getElementById('industryFilter').addEventListener('change', (e) => {
+        selectedIndustry = e.target.value;
+        renderBills();
+        renderMetrics();
+      });
+
+      document.getElementById('stateFilter').addEventListener('change', (e) => {
+        selectedState = e.target.value;
+        renderBills();
+        renderMetrics();
+        renderBreakingAlert();
+        renderActionPlan();
+      });
+    }
+
+    function getRelevantBills() {
+      let bills = BILLS.filter(bill => bill.state === selectedState);
+      if (selectedIndustry) {
+        bills = bills.filter(bill => bill.industries.includes(selectedIndustry));
+      }
+      return bills;
+    }
+
+    function renderMetrics() {
+      const bills = getRelevantBills();
+      const actionNeeded = bills.filter(b => b.urgency === 'high').length;
+      const costImpact = bills.filter(b => b.urgency === 'high').length * 50000; // Rough estimate
+      const allies = Math.floor(Math.random() * 50) + 20;
+
+      const html = `
+        <div class="metric-card">
+          <div class="metric-label">Bills affecting you</div>
+          <div class="metric-value">${bills.length}</div>
+          <div class="metric-sub">${actionNeeded} need action</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Action deadlines</div>
+          <div class="metric-value">${bills.filter(b => b.daysToVote && b.daysToVote < 30).length}</div>
+          <div class="metric-sub">Next 30 days</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Potential impact</div>
+          <div class="metric-value">$${(costImpact / 1000).toFixed(0)}K</div>
+          <div class="metric-sub">Year 1 if all pass</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Allies fighting</div>
+          <div class="metric-value">${allies}</div>
+          <div class="metric-sub">In your industry</div>
+        </div>
+      `;
+
+      document.getElementById('metricsContainer').innerHTML = html;
+    }
+
+    function renderBreakingAlert() {
+      const breaking = BILLS.find(b => b.breaking && b.state === selectedState);
+      const alert = document.getElementById('breakingAlert');
+      if (!breaking) {
+        alert.style.display = 'none';
+        return;
+      }
+      const daysStr = breaking.daysToVote === 1 ? '1 day' : `${breaking.daysToVote} days`;
+
+      document.getElementById('breakingTitle').textContent = breaking.title;
+      document.getElementById('breakingTime').textContent = '2 hours ago';
+      document.getElementById('breakingBody').innerHTML = `
+        This bill just moved to floor vote. <strong>Vote scheduled in ${daysStr}</strong> — you have limited time to contact your delegates.
+      `;
+      document.getElementById('breakingMeta').innerHTML = `
+        <span><i class="fas fa-chart-line"></i> Affects: Your business</span>
+        <span><i class="fas fa-clock"></i> Urgency: Contact now</span>
+        <span><i class="fas fa-file"></i> ${breaking.bill}</span>
+      `;
+
+      document.getElementById('breakingAction').onclick = () => openContactModal(breaking.bill);
+      alert.style.display = 'block';
+    }
+
+    function renderBills() {
+      const bills = getRelevantBills();
+      const container = document.getElementById('billsList');
+
+      const html = bills.map(bill => {
+        let statusClass = 'status-tracking';
+        let statusIcon = '<i class="fas fa-clock"></i>';
+        let statusText = 'Track';
+
+        if (bill.breaking) {
+          statusClass = 'status-breaking';
+          statusIcon = '<i class="fas fa-exclamation-triangle"></i>';
+          statusText = 'Act now';
+        } else if (bill.urgency === 'high' && bill.status === 'Pending') {
+          statusClass = 'status-action';
+          statusIcon = '<i class="fas fa-exclamation-circle"></i>';
+          statusText = 'Action needed';
+        } else if (bill.status === 'Enacted') {
+          statusClass = 'status-done';
+          statusIcon = '<i class="fas fa-check"></i>';
+          statusText = 'Enacted';
+        } else if (bill.urgency === 'medium') {
+          statusClass = 'status-alert';
+          statusIcon = '<i class="fas fa-info-circle"></i>';
+          statusText = 'Watch';
+        }
+
+        return `
+          <div class="bill-card">
+            <div class="bill-header">
+              <div class="bill-info">
+                <h3>${bill.title}</h3>
+                <div class="bill-meta">
+                  <span><i class="fas fa-file-alt"></i> ${bill.bill}</span>
+                  <span><i class="fas fa-user"></i> ${bill.patron}</span>
+                  <span><i class="fas fa-calendar"></i> ${bill.effectiveDate || 'TBD'}</span>
+                </div>
+              </div>
+              <span class="status-badge ${statusClass}">
+                ${statusIcon} ${statusText}
+              </span>
+            </div>
+            <div class="bill-summary">${bill.summary}</div>
+            <div class="impact-grid">
+              <div class="impact-item">
+                <div class="impact-label">Your exposure</div>
+                <div class="impact-value">${bill.impact}</div>
+              </div>
+              <div class="impact-item">
+                <div class="impact-label">When it happens</div>
+                <div class="impact-value">${bill.effectiveDate || 'Pending'}</div>
+              </div>
+            </div>
+            <div class="bill-actions">
+              <button class="btn btn-primary" onclick="openContactModal('${bill.bill}')">
+                <i class="fas fa-envelope"></i> Contact delegates
+              </button>
+              <button class="btn btn-secondary" onclick="viewDetails('${bill.bill}')">
+                View details
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.innerHTML = html || '<p style="color: var(--text-secondary);">No bills match your selection.</p>';
+    }
+
+    function renderFilters() {
+      const industries = new Set();
+      BILLS.forEach(b => {
+        b.industries.forEach(ind => industries.add(ind));
+      });
+
+      const html = Array.from(industries).map(ind =>
+        `<div class="filter-tag" onclick="selectIndustry('${ind}')" data-industry="${ind}">${ind}</div>`
+      ).join('');
+
+      document.getElementById('filterContainer').innerHTML = html;
+    }
+
+    function selectIndustry(industry) {
+      document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+      if (industry) {
+        document.querySelector(`[data-industry="${industry}"]`).classList.add('active');
+      }
+      selectedIndustry = industry;
+      renderBills();
+      renderMetrics();
+    }
+
+    function renderActionPlan() {
+      const breaking = BILLS.find(b => b.breaking && b.state === selectedState);
+      if (!breaking) {
+        const urgent = getRelevantBills().filter(b => b.daysToVote).sort((a, b) => a.daysToVote - b.daysToVote)[0];
+        document.getElementById('actionTimeline').innerHTML = urgent
+          ? `<p style="color: var(--text-secondary); font-size: 14px;">No breaking alerts in ${STATES[selectedState]} right now. Next deadline: <strong>${urgent.bill}</strong> (${urgent.title}) — vote expected in ${urgent.daysToVote} days.</p>`
+          : `<p style="color: var(--text-secondary); font-size: 14px;">No urgent action items in ${STATES[selectedState]} right now. You're all caught up.</p>`;
+        return;
+      }
+
+      const html = `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">Today</div>
+            <div class="timeline-text">Email your delegates about ${breaking.bill}</div>
+            <div class="timeline-desc">Takes ~2 min. Use our template or write your own.</div>
+            <div class="template-box">
+              <div class="template-label">Quick template</div>
+              <p class="template-text">"I own a business in [city]. ${breaking.bill} will cost us significant money. Please vote No or ask for amendments."</p>
+            </div>
+            <button class="btn btn-primary" onclick="copyToClipboard('I own a business in [city]. ${breaking.title.toLowerCase()} will cost us significant money. Please vote No.')">
+              <i class="fas fa-copy"></i> Copy template
+            </button>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">Tomorrow</div>
+            <div class="timeline-text">Join the coordinated call</div>
+            <div class="timeline-desc">Zoom call at 6pm — plan strategy with other businesses in your industry.</div>
+            <button class="btn btn-secondary" onclick="alert('Sign-up coming soon!')">
+              <i class="fas fa-video"></i> Join call
+            </button>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-label">Vote day (in ${breaking.daysToVote} days)</div>
+            <div class="timeline-text">Last-minute phone calls</div>
+            <div class="timeline-desc">Phone calls are more effective than emails. Here's the script.</div>
+            <div class="template-box">
+              <div class="template-label">Phone script (30 seconds)</div>
+              <p class="template-text">"Hi, I own a business in [city]. I'm calling to urge you to vote No on ${breaking.bill}. This bill will cost me too much money. Please vote No."</p>
+            </div>
+            <button class="btn btn-primary" onclick="copyToClipboard('Hi, I own a business in [city]. I\'m calling to urge you to vote No. This bill will cost me too much. Please vote No.')">
+              <i class="fas fa-phone"></i> Get delegate numbers
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('actionTimeline').innerHTML = html;
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function contactDelegates(bill) {
+      alert(`Opening email to delegates for ${bill}...`);
+    }
+
+    function viewDetails(bill) {
+      const b = BILLS.find(x => x.bill === bill);
+      alert(`${b.bill}: ${b.title}\n\n${b.summary}`);
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text);
+      alert('Template copied to clipboard!');
+    }
+
+    // CONTACT WORKFLOW
+    function openContactModal(bill) {
+      selectedBillForContact = bill;
+      document.getElementById('contactModal').classList.add('active');
+      document.getElementById('modalStep1').style.display = 'block';
+      document.getElementById('modalStep2').style.display = 'none';
+      document.getElementById('modalStep3').style.display = 'none';
+    }
+
+    function closeModal() {
+      document.getElementById('contactModal').classList.remove('active');
+      selectedBillForContact = null;
+    }
+
+    function findDelegates() {
+      const zip = document.getElementById('zipCode').value.trim();
+      if (!zip || zip.length < 5) {
+        alert('Please enter a valid 5-digit ZIP code');
+        return;
+      }
+
+      const delegates = DELEGATES_BY_ZIP[zip];
+      if (!delegates) {
+        alert('ZIP code not found. Using demo data for 22201 (Arlington)');
+        renderDelegates(DELEGATES_BY_ZIP['22201'], zip);
+      } else {
+        renderDelegates(delegates, zip);
+      }
+
+      document.getElementById('modalStep1').style.display = 'none';
+      document.getElementById('modalStep2').style.display = 'block';
+      document.getElementById('zipDisplay').textContent = zip;
+
+      // Pre-fill message
+      const bill = BILLS.find(b => b.bill === selectedBillForContact);
+      const template = `Dear [Delegate Name],
+
+I'm a business owner in [city] and I'm writing to urge you to vote No on ${bill.bill} (${bill.title}).
+
+${bill.summary}
+
+This will directly impact my business and the livelihoods of my employees. I ask for your support in voting No on this bill or requesting amendments.
+
+Thank you for your service,
+[Your Name]`;
+
+      document.getElementById('messageTemplate').value = template;
+    }
+
+    function renderDelegates(delegates, zip) {
+      const html = delegates.map((d, idx) => {
+        const isContacted = contactedDelegates[zip + '-' + idx] ? true : false;
+        return `
+          <div class="delegate-card">
+            ${isContacted ? '<span class="contacted-badge">✓ Contacted</span>' : ''}
+            <div class="delegate-name">${d.name}</div>
+            <div class="delegate-title">${d.chamber} District ${d.district}</div>
+            <div class="delegate-contact">
+              <a href="mailto:${d.email}">📧 ${d.email}</a>
+              <a href="tel:${d.phone}">📞 ${d.phone}</a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('delegatesList').innerHTML = html;
+    }
+
+    function backToStep1() {
+      document.getElementById('modalStep1').style.display = 'block';
+      document.getElementById('modalStep2').style.display = 'none';
+      document.getElementById('zipCode').focus();
+    }
+
+    function sendMessage() {
+      const name = document.getElementById('userName').value.trim();
+      const email = document.getElementById('userEmail').value.trim();
+      const business = document.getElementById('userBusiness').value.trim();
+
+      if (!name || !email || !business) {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      // In a real app, this would send via backend
+      const zip = document.getElementById('zipCode').value;
+      const delegates = DELEGATES_BY_ZIP[zip] || DELEGATES_BY_ZIP['22201'];
+
+      // Mark delegates as contacted
+      delegates.forEach((d, idx) => {
+        contactedDelegates[zip + '-' + idx] = true;
+      });
+      localStorage.setItem('contactedDelegates', JSON.stringify(contactedDelegates));
+
+      // Show success
+      document.getElementById('modalStep1').style.display = 'none';
+      document.getElementById('modalStep2').style.display = 'none';
+      document.getElementById('modalStep3').style.display = 'block';
+    }
+
+    function copyMessage() {
+      const msg = document.getElementById('messageTemplate').value;
+      navigator.clipboard.writeText(msg);
+      alert('Message copied! You can now paste it into your email or share it with others.');
+    }
+
+    // Initialize on page load
+    window.addEventListener('load', init);
+  </script>
+</body>
+</html>
