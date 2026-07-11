@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LobbyistIQ — Politics, made doable</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FFB648'/%3E%3Cstop offset='0.5' stop-color='%23FF6B6B'/%3E%3Cstop offset='1' stop-color='%23C94FE0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M36 8 L18 36 L30 36 L26 56 L46 26 L33 26 Z' fill='white'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,13 +13,13 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #FFF9F0;
+      --bg: #F7F5FF;
       --card: #FFFFFF;
       --ink: #22283B;
       --ink-soft: #5C6478;
       --ink-faint: #9098AC;
-      --line: #F0E6D6;
-      --line-strong: #E3D5BC;
+      --line: #EAE5F6;
+      --line-strong: #D8D1EA;
       --coral: #FF5E62;
       --coral-deep: #E23E4E;
       --coral-soft: #FFE7E0;
@@ -42,7 +43,7 @@
 
     body {
       font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg);
+      background: linear-gradient(165deg, #EFEAFF 0%, #FFEDF3 30%, #FFF4E4 55%, #E8F8F1 85%, #E9F1FF 100%) fixed;
       color: var(--ink);
       line-height: 1.65;
       min-height: 100vh;
@@ -55,11 +56,11 @@
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(600px 420px at 90% -6%, rgba(255, 182, 72, 0.18), transparent 60%),
-        radial-gradient(560px 420px at 100% 30%, rgba(241, 91, 181, 0.13), transparent 60%),
-        radial-gradient(680px 480px at -10% 20%, rgba(155, 93, 229, 0.13), transparent 60%),
-        radial-gradient(560px 440px at 15% 100%, rgba(79, 208, 198, 0.14), transparent 60%),
-        radial-gradient(520px 400px at 75% 105%, rgba(47, 128, 237, 0.10), transparent 60%);
+        radial-gradient(620px 440px at 90% -6%, rgba(255, 182, 72, 0.28), transparent 60%),
+        radial-gradient(580px 440px at 102% 32%, rgba(241, 91, 181, 0.20), transparent 60%),
+        radial-gradient(700px 500px at -12% 18%, rgba(155, 93, 229, 0.22), transparent 60%),
+        radial-gradient(580px 460px at 12% 102%, rgba(79, 208, 198, 0.22), transparent 60%),
+        radial-gradient(540px 420px at 72% 106%, rgba(47, 128, 237, 0.16), transparent 60%);
     }
 
     .page { position: relative; z-index: 1; }
@@ -72,9 +73,9 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem 2rem;
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(12px);
-      background: rgba(250, 247, 241, 0.85);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(14px);
+      background: rgba(250, 248, 255, 0.72);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -838,6 +839,77 @@
     .community-icon.c2 { background: var(--lav-soft); color: var(--lav); }
     .community-icon.c3 { background: var(--mint-soft); color: var(--mint); }
 
+    /* TRUST STRIP */
+    .trust-strip {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2.2rem;
+      animation: rise 0.5s ease both;
+    }
+
+    .trust-stats {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+
+    .trust-stat {
+      flex: 1;
+      min-width: 150px;
+      text-align: center;
+      padding: 0.4rem 1rem;
+      border-right: 1px solid var(--line);
+    }
+
+    .trust-stat:last-child { border-right: none; }
+
+    .trust-num {
+      font-family: 'Nunito', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.15;
+    }
+
+    .trust-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+
+    .trust-sources {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      margin-top: 1rem;
+      padding-top: 1rem;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-faint);
+    }
+
+    .source-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .source-chip i { font-size: 11px; }
+
     /* HOW IT WORKS */
     .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 2.4rem; }
 
@@ -1206,6 +1278,35 @@
           </select>
         </div>
         <div id="syncBadge"></div>
+      </div>
+
+      <!-- TRUST STRIP -->
+      <div class="trust-strip" id="trustStrip">
+        <div class="trust-stats">
+          <div class="trust-stat">
+            <div class="trust-num" id="trustBills">3,646</div>
+            <div class="trust-label">bills scanned this session</div>
+          </div>
+          <div class="trust-stat">
+            <div class="trust-num" id="trustBriefs">178</div>
+            <div class="trust-label">turned into plain-English briefs</div>
+          </div>
+          <div class="trust-stat">
+            <div class="trust-num" id="trustLaws">73</div>
+            <div class="trust-label">new laws flagged for you</div>
+          </div>
+          <div class="trust-stat">
+            <div class="trust-num">24/7</div>
+            <div class="trust-label">synced with the official system</div>
+          </div>
+        </div>
+        <div class="trust-sources">
+          <span>Built on the same sources the pros use:</span>
+          <span class="source-chip"><i class="fas fa-landmark"></i> Virginia LIS (official)</span>
+          <span class="source-chip"><i class="fab fa-youtube" style="color:#E02F2F;"></i> Senate of Virginia</span>
+          <span class="source-chip"><i class="fas fa-microphone"></i> HODSpeak</span>
+          <span class="source-chip"><i class="fas fa-magnifying-glass-chart"></i> VPAP</span>
+        </div>
       </div>
 
       <!-- HOW IT WORKS -->
@@ -1837,7 +1938,15 @@
       renderActionPlan();
       renderFilters();
       renderSyncBadge();
+      updateTrustStrip();
       document.getElementById('navSession').textContent = `Live · ${STATES[selectedState]} 2026`;
+    }
+
+    function updateTrustStrip() {
+      if (typeof VA_SESSION === 'undefined') return;
+      document.getElementById('trustBills').textContent = VA_SESSION.totalBills.toLocaleString();
+      document.getElementById('trustBriefs').textContent = VA_SESSION.matched;
+      document.getElementById('trustLaws').textContent = VA_SESSION.enacted;
     }
 
     function renderSyncBadge() {
