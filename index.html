@@ -24,7 +24,7 @@
       --coral: #FF5E62;
       --coral-deep: #E23E4E;
       --coral-soft: #FFE7E0;
-      --grad: linear-gradient(135deg, #FFB648 0%, #FF6B6B 50%, #C94FE0 100%);
+      --grad: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
       --grad-cool: linear-gradient(135deg, #4FD0C6 0%, #4F8EF7 100%);
       --mint: #16A085;
       --mint-soft: #D7F5EC;
@@ -57,9 +57,8 @@
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(720px 480px at 88% -8%, rgba(255, 94, 98, 0.07), transparent 60%),
-        radial-gradient(760px 540px at -14% 22%, rgba(155, 93, 229, 0.07), transparent 60%),
-        radial-gradient(640px 480px at 55% 108%, rgba(79, 208, 198, 0.06), transparent 60%);
+        radial-gradient(720px 480px at 88% -8%, rgba(139, 92, 246, 0.07), transparent 60%),
+        radial-gradient(760px 540px at -14% 22%, rgba(99, 102, 241, 0.07), transparent 60%);
     }
 
     .page { position: relative; z-index: 1; }
@@ -101,7 +100,7 @@
       justify-content: center;
       font-size: 17px;
       color: white;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 16px rgba(244, 89, 59, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 16px rgba(99, 102, 241, 0.35);
       position: relative;
       overflow: hidden;
     }
@@ -205,7 +204,7 @@
       position: absolute;
       inset: 8% 2%;
       background:
-        radial-gradient(closest-side, rgba(255, 107, 107, 0.13), transparent 70%),
+        radial-gradient(closest-side, rgba(139, 92, 246, 0.13), transparent 70%),
         radial-gradient(rgba(34, 40, 59, 0.13) 1px, transparent 1px);
       background-size: 100% 100%, 26px 26px;
       border-radius: 30px;
@@ -237,7 +236,7 @@
     .fcard-script .fc-row { display: flex; align-items: center; gap: 10px; }
     .fcard-script .fc-ic {
       width: 34px; height: 34px; border-radius: 11px;
-      background: var(--mint-soft); color: var(--mint);
+      background: var(--lav-soft); color: var(--lav);
       display: flex; align-items: center; justify-content: center; font-size: 14px;
       flex-shrink: 0;
     }
@@ -275,18 +274,18 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: linear-gradient(120deg, var(--pink-soft), var(--lav-soft) 60%, var(--sky-soft));
-      border: 1px solid #F0DCEE;
+      background: var(--lav-soft);
+      border: 1px solid #E2DCF8;
       border-radius: 999px;
       box-shadow: var(--shadow);
       padding: 0.45rem 1.1rem;
       font-size: 13px;
       font-weight: 700;
-      color: #7A3FA0;
+      color: #6B4FD8;
       margin-bottom: 1.2rem;
     }
 
-    .hero-kicker i { color: var(--pink); }
+    .hero-kicker i { color: var(--lav); }
 
     .hero h1 {
       font-size: clamp(30px, 4.6vw, 47px);
@@ -297,7 +296,7 @@
     }
 
     .hero h1 .grad {
-      background: linear-gradient(110deg, #FFB648, #FF6B6B 30%, #C94FE0 55%, #FF6B6B 80%, #FFB648);
+      background: linear-gradient(110deg, #6366F1, #8B5CF6 30%, #A78BFA 55%, #8B5CF6 80%, #6366F1);
       background-size: 250% 100%;
       -webkit-background-clip: text;
       background-clip: text;
@@ -338,7 +337,7 @@
     select:hover, select:focus {
       outline: none;
       border-color: var(--coral);
-      box-shadow: 0 0 0 3px rgba(244, 89, 59, 0.12);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
     }
 
     .sync-badge {
@@ -391,7 +390,7 @@
       letter-spacing: 0.08em;
       padding: 0.4rem 0.8rem;
       border-radius: 999px;
-      box-shadow: 0 4px 14px rgba(244, 89, 59, 0.35);
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
     }
 
     .live-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: white; animation: blink 1.1s ease-in-out infinite; }
@@ -428,9 +427,9 @@
     .btn-hot, .btn-grad {
       background: var(--grad);
       color: white;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 6px 18px rgba(244, 89, 59, 0.32);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 6px 18px rgba(99, 102, 241, 0.32);
     }
-    .btn-hot:hover, .btn-grad:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 26px rgba(244, 89, 59, 0.45); transform: translateY(-1px); }
+    .btn-hot:hover, .btn-grad:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 26px rgba(99, 102, 241, 0.45); transform: translateY(-1px); }
 
     .btn-ghost {
       background: var(--card);
@@ -463,10 +462,10 @@
       background: var(--bar, var(--grad));
     }
 
-    .metric:nth-child(1) { --bar: linear-gradient(90deg, #FF8A65, #FF5E62); }
-    .metric:nth-child(2) { --bar: linear-gradient(90deg, #4FD0C6, #2F80ED); }
-    .metric:nth-child(3) { --bar: linear-gradient(90deg, #FFC24B, #E8A400); }
-    .metric:nth-child(4) { --bar: linear-gradient(90deg, #C77DFF, #9B5DE5); }
+    .metric:nth-child(1) { --bar: linear-gradient(90deg, #6366F1, #7C6BF4); }
+    .metric:nth-child(2) { --bar: linear-gradient(90deg, #7C6BF4, #8B5CF6); }
+    .metric:nth-child(3) { --bar: linear-gradient(90deg, #8B5CF6, #A78BFA); }
+    .metric:nth-child(4) { --bar: linear-gradient(90deg, #A78BFA, #C4B5FD); }
 
     .metric:nth-child(2) { animation-delay: 0.06s; }
     .metric:nth-child(3) { animation-delay: 0.12s; }
@@ -522,7 +521,7 @@
     .tab-button.active {
       background: var(--grad);
       color: white;
-      box-shadow: 0 4px 12px rgba(244, 89, 59, 0.3);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
 
     .tab-button:not(.active):hover { color: var(--ink); }
@@ -561,7 +560,7 @@
       background: var(--grad);
       border-color: transparent;
       color: white;
-      box-shadow: 0 4px 12px rgba(244, 89, 59, 0.3);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
 
     /* BILL CARDS */
@@ -592,11 +591,7 @@
       padding: 0.28rem 0.7rem;
       border-radius: 999px;
     }
-    .cat-labor { background: var(--pink-soft); color: #C22A7C; }
-    .cat-health { background: var(--mint-soft); color: var(--mint); }
-    .cat-tax { background: var(--sun-soft); color: var(--sun); }
-    .cat-legal { background: var(--sky-soft); color: var(--sky); }
-    .cat-general { background: var(--lav-soft); color: var(--lav); }
+    .cat-labor, .cat-health, .cat-tax, .cat-legal, .cat-general { background: #EEF0FB; color: #5A5FCF; }
 
     .bill-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 
@@ -666,8 +661,8 @@
 
     /* IMPACT REPORT CTA */
     .report-cta {
-      background: linear-gradient(120deg, #FFF1E8 0%, #FFE9F2 45%, #F1EBFF 100%);
-      border: 1px solid #F4DDE8;
+      background: linear-gradient(120deg, #F1EFFF 0%, #F7F4FF 50%, #EFF1FF 100%);
+      border: 1px solid #E2DCF8;
       border-radius: 24px;
       box-shadow: var(--shadow);
       padding: 2rem 2.2rem;
@@ -734,7 +729,7 @@
       width: 26px; height: 26px; border-radius: 8px; background: var(--grad);
       display: inline-flex; align-items: center; justify-content: center; font-size: 12px;
     }
-    .rd-brand .iq { background: linear-gradient(135deg, #FFC24B, #FF7A7A); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .rd-brand .iq { background: linear-gradient(135deg, #A78BFA, #8B5CF6); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
     .rd-head h1 { font-family: var(--font-display); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.4rem; color: white; }
     .rd-head .rd-sub { font-size: 13px; color: #A9B1C9; }
@@ -777,9 +772,9 @@
 
     .tour-ring {
       position: absolute;
-      border: 3px solid #FFC24B;
+      border: 3px solid #A78BFA;
       border-radius: 18px;
-      box-shadow: 0 0 0 6px rgba(255, 194, 75, 0.35), 0 0 40px rgba(255, 194, 75, 0.5);
+      box-shadow: 0 0 0 6px rgba(167, 139, 250, 0.35), 0 0 40px rgba(167, 139, 250, 0.5);
       background: transparent;
       pointer-events: none;
       transition: all 0.35s ease;
@@ -849,7 +844,7 @@
       top: 22px;
       bottom: 0;
       width: 2px;
-      background: linear-gradient(180deg, rgba(244, 89, 59, 0.4), rgba(244, 89, 59, 0.06));
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.4), rgba(99, 102, 241, 0.06));
     }
 
     .timeline-dot {
@@ -857,7 +852,7 @@
       height: 18px;
       border-radius: 50%;
       background: var(--grad);
-      box-shadow: 0 4px 12px rgba(244, 89, 59, 0.35);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
       flex-shrink: 0;
       margin-top: 3px;
     }
@@ -867,7 +862,7 @@
       font-weight: 800;
       letter-spacing: 0.11em;
       text-transform: uppercase;
-      color: var(--coral-deep);
+      color: #6B4FD8;
       margin-bottom: 0.3rem;
     }
 
@@ -877,7 +872,7 @@
     .template-box {
       background: var(--bg);
       border: 1px solid var(--line);
-      border-left: 4px solid var(--coral);
+      border-left: 4px solid var(--lav);
       border-radius: 0 14px 14px 0;
       padding: 1rem 1.2rem;
       margin: 0.8rem 0 1rem;
@@ -922,7 +917,7 @@
     }
 
     .watch-icon.yt { background: #FDE8E5; color: #E02F2F; }
-    .watch-icon.house { background: var(--sky-soft); color: var(--sky); }
+    .watch-icon.house { background: var(--lav-soft); color: var(--lav); }
 
     .watch-title { font-family: var(--font-display); font-size: 16px; font-weight: 800; }
     .watch-sub { font-size: 12.5px; color: var(--ink-soft); font-weight: 500; }
@@ -1042,9 +1037,9 @@
       font-size: 20px;
     }
 
-    .community-icon.c1 { background: var(--sky-soft); color: var(--sky); }
+    .community-icon.c1 { background: var(--lav-soft); color: var(--lav); }
     .community-icon.c2 { background: var(--lav-soft); color: var(--lav); }
-    .community-icon.c3 { background: var(--mint-soft); color: var(--mint); }
+    .community-icon.c3 { background: #EEF0FB; color: #6366F1; }
 
     /* TRUST STRIP — 3D light band */
     .trust-strip {
@@ -1098,10 +1093,10 @@
       background: var(--bar, var(--grad));
     }
 
-    .trust-stat:nth-child(1) { --bar: linear-gradient(90deg, #FF8A65, #FF5E62); }
-    .trust-stat:nth-child(2) { --bar: linear-gradient(90deg, #4FD0C6, #2F80ED); }
-    .trust-stat:nth-child(3) { --bar: linear-gradient(90deg, #FFC24B, #E8A400); }
-    .trust-stat:nth-child(4) { --bar: linear-gradient(90deg, #C77DFF, #9B5DE5); }
+    .trust-stat:nth-child(1) { --bar: linear-gradient(90deg, #6366F1, #7C6BF4); }
+    .trust-stat:nth-child(2) { --bar: linear-gradient(90deg, #7C6BF4, #8B5CF6); }
+    .trust-stat:nth-child(3) { --bar: linear-gradient(90deg, #8B5CF6, #A78BFA); }
+    .trust-stat:nth-child(4) { --bar: linear-gradient(90deg, #A78BFA, #C4B5FD); }
 
     .trust-stat:hover {
       transform: translateY(-4px);
@@ -1196,10 +1191,10 @@
       background: var(--bar, var(--grad));
     }
 
-    .how-card:nth-child(1) { --bar: linear-gradient(90deg, #FF8A65, #FF5E62); }
-    .how-card:nth-child(2) { --bar: linear-gradient(90deg, #4FD0C6, #2F80ED); }
-    .how-card:nth-child(3) { --bar: linear-gradient(90deg, #FFC24B, #E8A400); }
-    .how-card:nth-child(4) { --bar: linear-gradient(90deg, #C77DFF, #9B5DE5); }
+    .how-card:nth-child(1) { --bar: linear-gradient(90deg, #6366F1, #7C6BF4); }
+    .how-card:nth-child(2) { --bar: linear-gradient(90deg, #7C6BF4, #8B5CF6); }
+    .how-card:nth-child(3) { --bar: linear-gradient(90deg, #8B5CF6, #A78BFA); }
+    .how-card:nth-child(4) { --bar: linear-gradient(90deg, #A78BFA, #C4B5FD); }
 
     .how-card:hover { box-shadow: 0 10px 24px rgba(34, 40, 59, 0.10), 0 30px 70px rgba(34, 40, 59, 0.16); }
 
@@ -1230,6 +1225,39 @@
     }
 
     .how-card .how-title, .how-card .how-desc { transform: translateZ(16px); }
+
+    .how-card { cursor: pointer; }
+
+    .how-try {
+      margin-top: 0.8rem;
+      font-size: 12px;
+      font-weight: 700;
+      color: #6B4FD8;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .how-card:hover .how-try { opacity: 1; transform: none; }
+
+    .sample-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--lav-soft);
+      border-bottom: 1px solid #E2DCF8;
+      padding: 0.85rem 2.4rem;
+      font-size: 13px;
+      font-weight: 700;
+      color: #6B4FD8;
+    }
+
+    .sample-banner .btn { font-size: 12px; padding: 0.5rem 1rem; }
 
     /* SCROLL REVEAL */
     .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.3, 1), transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1); }
@@ -1351,7 +1379,7 @@
     .form-group input:focus, .form-group textarea:focus {
       outline: none;
       border-color: var(--coral);
-      box-shadow: 0 0 0 3px rgba(244, 89, 59, 0.12);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
       background: var(--card);
     }
 
@@ -1418,7 +1446,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 3px 10px rgba(244, 89, 59, 0.3);
+      box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
     }
 
     .step-body { flex: 1; font-size: 13.5px; color: var(--ink-soft); }
@@ -1448,7 +1476,7 @@
       background: var(--grad);
       color: white;
       border-color: transparent;
-      box-shadow: 0 4px 12px rgba(244, 89, 59, 0.3);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
 
     .script-output {
@@ -1646,25 +1674,29 @@
 
       <!-- HOW IT WORKS -->
       <div class="how-grid">
-        <div class="how-card">
-          <div class="how-num" style="background: linear-gradient(135deg,#FF8A65,#FF5E62);">1</div>
+        <div class="how-card" onclick="stepGoPick()" role="button" tabindex="0">
+          <div class="how-num" style="background: linear-gradient(135deg,#6366F1,#7C6BF4);">1</div>
           <div class="how-title">Pick your state & industry</div>
           <div class="how-desc">We scan every bill so you don't have to — and show you only the ones that touch your world.</div>
+          <div class="how-try">Try it <i class="fas fa-arrow-right"></i></div>
         </div>
-        <div class="how-card">
-          <div class="how-num" style="background: linear-gradient(135deg,#4FD0C6,#2F80ED);">2</div>
+        <div class="how-card" onclick="stepGoBills()" role="button" tabindex="0">
+          <div class="how-num" style="background: linear-gradient(135deg,#7C6BF4,#8B5CF6);">2</div>
           <div class="how-title">Get the quick version</div>
           <div class="how-desc">Every bill becomes a short summary with bullet points — what changed, what it costs, when it hits. No 40-page reading.</div>
+          <div class="how-try">Try it <i class="fas fa-arrow-right"></i></div>
         </div>
-        <div class="how-card">
-          <div class="how-num" style="background: linear-gradient(135deg,#FFC24B,#E8A400);">3</div>
+        <div class="how-card" onclick="stepGoTestify()" role="button" tabindex="0">
+          <div class="how-num" style="background: linear-gradient(135deg,#8B5CF6,#A78BFA);">3</div>
           <div class="how-title">Speak up in minutes</div>
           <div class="how-desc">Email your delegate, or sign up to testify from home with a script we help you write.</div>
+          <div class="how-try">Try it <i class="fas fa-arrow-right"></i></div>
         </div>
-        <div class="how-card">
-          <div class="how-num" style="background: linear-gradient(135deg,#C77DFF,#9B5DE5);">4</div>
+        <div class="how-card" onclick="stepGoClip()" role="button" tabindex="0">
+          <div class="how-num" style="background: linear-gradient(135deg,#A78BFA,#C4B5FD);">4</div>
           <div class="how-title">Share what you did</div>
           <div class="how-desc">Clip your testimony and post it — proof you showed up for your community.</div>
+          <div class="how-try">Try it <i class="fas fa-arrow-right"></i></div>
         </div>
       </div>
 
@@ -1674,7 +1706,10 @@
           <h2>Your personalized impact report — in 30 seconds</h2>
           <p>Tell us four things about your business and get a polished, printable report: the exact laws that affect you, when they hit, and what to do about each one.</p>
         </div>
-        <button class="btn btn-grad" onclick="openReportModal()"><i class="fas fa-file-invoice"></i> Generate my free report</button>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn btn-grad" onclick="openReportModal()"><i class="fas fa-file-invoice"></i> Generate my free report</button>
+          <button class="btn btn-ghost" onclick="showSampleReport()" style="font-size: 12.5px;"><i class="fas fa-eye"></i> See a sample first</button>
+        </div>
       </div>
 
       <!-- BREAKING -->
@@ -1697,9 +1732,9 @@
 
       <!-- TABS -->
       <div class="tabs">
-        <button class="tab-button active" onclick="switchTab('overview', event)">Overview</button>
-        <button class="tab-button" onclick="switchTab('bills', event)">Your bills</button>
-        <button class="tab-button" onclick="switchTab('action', event)">Action plan</button>
+        <button class="tab-button active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+        <button class="tab-button" data-tab="bills" onclick="switchTab('bills')">Your bills</button>
+        <button class="tab-button" data-tab="action" onclick="switchTab('action')">Action plan</button>
       </div>
 
       <!-- OVERVIEW -->
@@ -1732,7 +1767,7 @@
       <div class="pipeline-wrap">
         <div class="pipeline-scroll">
           <div class="pipe-card">
-            <div class="pipe-icon" style="background: var(--coral-soft); color: var(--coral-deep);"><i class="fas fa-burger"></i></div>
+            <div class="pipe-icon" style="background: var(--lav-soft); color: var(--lav);"><i class="fas fa-burger"></i></div>
             <div class="pipe-title">Fast-food wage councils</div>
             <div class="pipe-desc">California created a state council that sets fast-food wages — now $20/hour for big chains. New York has debated the same model.</div>
             <div class="pipe-states">
@@ -1742,7 +1777,7 @@
             </div>
           </div>
           <div class="pipe-card">
-            <div class="pipe-icon" style="background: var(--mint-soft); color: var(--mint);"><i class="fas fa-money-bill-trend-up"></i></div>
+            <div class="pipe-icon" style="background: var(--lav-soft); color: var(--lav);"><i class="fas fa-money-bill-trend-up"></i></div>
             <div class="pipe-title">The $15+ minimum wage wave</div>
             <div class="pipe-desc">California, New York, New Jersey, and Maryland are already at $15 or higher. Virginia just joined the wave — $15 by January 2028.</div>
             <div class="pipe-states">
@@ -1760,7 +1795,7 @@
             </div>
           </div>
           <div class="pipe-card">
-            <div class="pipe-icon" style="background: var(--sky-soft); color: var(--sky);"><i class="fas fa-calendar-week"></i></div>
+            <div class="pipe-icon" style="background: var(--lav-soft); color: var(--lav);"><i class="fas fa-calendar-week"></i></div>
             <div class="pipe-title">Predictive scheduling</div>
             <div class="pipe-desc">Oregon (statewide) and cities like NYC, Seattle, and San Francisco require posting worker schedules up to two weeks ahead. Retail and restaurants: watch this one.</div>
             <div class="pipe-states">
@@ -1769,7 +1804,7 @@
             </div>
           </div>
           <div class="pipe-card">
-            <div class="pipe-icon" style="background: var(--sun-soft); color: var(--sun);"><i class="fas fa-robot"></i></div>
+            <div class="pipe-icon" style="background: var(--lav-soft); color: var(--lav);"><i class="fas fa-robot"></i></div>
             <div class="pipe-title">AI rules for business</div>
             <div class="pipe-desc">NYC audits AI hiring tools; Colorado's AI law arrives in 2026. Virginia passed its own AI bills this session — this one's already here.</div>
             <div class="pipe-states">
@@ -1778,7 +1813,7 @@
             </div>
           </div>
           <div class="pipe-card">
-            <div class="pipe-icon" style="background: var(--pink-soft); color: #C22A7C;"><i class="fas fa-shield-halved"></i></div>
+            <div class="pipe-icon" style="background: var(--lav-soft); color: var(--lav);"><i class="fas fa-shield-halved"></i></div>
             <div class="pipe-title">Consumer data privacy</div>
             <div class="pipe-desc">Virginia was the second state ever to pass a consumer data privacy law — now roughly 20 states have one. Sometimes the pipeline starts here.</div>
             <div class="pipe-states">
@@ -2322,6 +2357,10 @@
       });
       initReveal();
       initTilt();
+      if (!localStorage.getItem('lqSampleSeen')) {
+        localStorage.setItem('lqSampleSeen', '1');
+        setTimeout(showSampleReport, 1600);
+      }
     }
 
     function initReveal() {
@@ -2752,11 +2791,10 @@
         (focus.status === 'Enacted') ? enactedPlan : livePlan;
     }
 
-    function switchTab(tabName, evt) {
+    function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
       document.getElementById(tabName).classList.add('active');
-      evt.target.classList.add('active');
     }
 
     function viewDetails(billId) {
@@ -3139,7 +3177,7 @@ You can do this too — link in bio.
         </div>`;
     }
 
-    function generateReport() {
+    function generateReport(isSample) {
       const biz = document.getElementById('rBiz').value.trim() || 'Your business';
       const city = document.getElementById('rCity').value.trim() || 'Virginia';
       const emp = parseInt(document.getElementById('rEmp').value, 10) || null;
@@ -3155,7 +3193,13 @@ You can do this too — link in bio.
       const genDate = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
       const indLabel = reportIndustry.charAt(0).toUpperCase() + reportIndustry.slice(1);
 
-      document.getElementById('reportDoc').innerHTML = `
+      const sampleBanner = isSample ? `
+        <div class="sample-banner">
+          <span><i class="fas fa-eye"></i> Sample report — this is what yours looks like, built from real Virginia laws</span>
+          <button class="btn btn-grad" onclick="closeReport(); openReportModal();">Create my own</button>
+        </div>` : '';
+
+      document.getElementById('reportDoc').innerHTML = sampleBanner + `
         <div class="rd-head">
           <div class="rd-brand"><span class="bolt"><i class="fas fa-bolt"></i></span> Lobbyist<span class="iq">IQ</span></div>
           <h1>${biz} — 2026 Virginia Legislative Impact Report</h1>
@@ -3196,6 +3240,51 @@ You can do this too — link in bio.
       document.getElementById('reportView').classList.add('active');
       document.getElementById('reportView').scrollTop = 0;
       document.body.style.overflow = 'hidden';
+    }
+
+    // ===== STEP CARD ACTIONS =====
+    function pulseTarget(el) {
+      el.style.transition = 'box-shadow 0.3s';
+      el.style.boxShadow = '0 0 0 5px rgba(139, 92, 246, 0.35)';
+      setTimeout(() => { el.style.boxShadow = ''; }, 1600);
+    }
+
+    function stepGoPick() {
+      document.documentElement.style.scrollBehavior = 'smooth';
+      document.getElementById('stateFilter').scrollIntoView({ block: 'center' });
+      setTimeout(() => {
+        pulseTarget(document.getElementById('stateFilter'));
+        pulseTarget(document.getElementById('industryFilter'));
+      }, 450);
+    }
+
+    function stepGoBills() {
+      switchTab('bills');
+      document.documentElement.style.scrollBehavior = 'smooth';
+      document.querySelector('.tabs').scrollIntoView({ block: 'start' });
+    }
+
+    function stepFocusBill() {
+      return BILLS.find(b => b.breaking && b.state === selectedState) || getRelevantBills()[0];
+    }
+
+    function stepGoTestify() {
+      const b = stepFocusBill();
+      if (b) openTestifyModal(b.bill);
+    }
+
+    function stepGoClip() {
+      const b = stepFocusBill();
+      if (b) openClipModal(b.bill);
+    }
+
+    // ===== SAMPLE REPORT =====
+    function showSampleReport() {
+      document.getElementById('rBiz').value = 'Sunrise Café';
+      document.getElementById('rCity').value = 'Richmond';
+      document.getElementById('rEmp').value = '15';
+      reportIndustry = 'restaurants';
+      generateReport(true);
     }
 
     // ===== GUIDED TOUR =====
