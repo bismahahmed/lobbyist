@@ -739,6 +739,75 @@
     .watch-actions { display: flex; gap: 10px; flex-wrap: wrap; }
     .watch-actions .btn { font-size: 12.5px; padding: 0.58rem 1.05rem; }
 
+    /* PIPELINE RADAR */
+    .pipeline-wrap { position: relative; margin-bottom: 0.5rem; }
+
+    .pipeline-scroll {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding: 4px 4px 14px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .pipeline-scroll::-webkit-scrollbar { height: 8px; }
+    .pipeline-scroll::-webkit-scrollbar-track { background: transparent; }
+    .pipeline-scroll::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }
+
+    .pipe-card {
+      flex: 0 0 265px;
+      scroll-snap-align: start;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 1.25rem 1.3rem 1.35rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pipe-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+
+    .pipe-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 0.8rem;
+    }
+
+    .pipe-title { font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 800; margin-bottom: 0.35rem; }
+    .pipe-desc { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 0.9rem; flex: 1; }
+
+    .pipe-states { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .state-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 0.28rem 0.65rem;
+      border-radius: 999px;
+    }
+
+    .state-chip .sdot { width: 6px; height: 6px; border-radius: 50%; }
+    .state-law { background: var(--mint-soft); color: var(--mint); }
+    .state-law .sdot { background: var(--mint); }
+    .state-moving { background: var(--sun-soft); color: var(--sun); }
+    .state-moving .sdot { background: var(--sun); }
+    .state-here { background: var(--pink-soft); color: #C22A7C; }
+    .state-here .sdot { background: var(--pink); }
+
+    .pipe-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; font-weight: 600; color: var(--ink-faint); margin-bottom: 1rem; }
+    .pipe-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .pipe-legend .sdot { width: 8px; height: 8px; border-radius: 50%; }
+
     /* COMMUNITY */
     .community-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
 
@@ -1204,6 +1273,76 @@
         <div class="timeline" id="actionTimeline"></div>
       </div>
 
+      <!-- PIPELINE RADAR -->
+      <div class="section-title">Coming down the pipeline</div>
+      <p style="font-size: 13.5px; color: var(--ink-soft); margin: -0.4rem 0 0.9rem; max-width: 640px;">
+        Policy travels. What California and New York pass today tends to show up in Richmond a few sessions later — here's what's spreading, so nothing sneaks up on you.
+      </p>
+      <div class="pipe-legend">
+        <span><span class="sdot" style="background: var(--mint);"></span> Already law there</span>
+        <span><span class="sdot" style="background: var(--sun);"></span> Moving / debated</span>
+        <span><span class="sdot" style="background: var(--pink);"></span> Virginia status</span>
+      </div>
+      <div class="pipeline-wrap">
+        <div class="pipeline-scroll">
+          <div class="pipe-card">
+            <div class="pipe-icon" style="background: var(--coral-soft); color: var(--coral-deep);"><i class="fas fa-burger"></i></div>
+            <div class="pipe-title">Fast-food wage councils</div>
+            <div class="pipe-desc">California created a state council that sets fast-food wages — now $20/hour for big chains. New York has debated the same model.</div>
+            <div class="pipe-states">
+              <span class="state-chip state-law"><span class="sdot"></span>CA law</span>
+              <span class="state-chip state-moving"><span class="sdot"></span>NY debated</span>
+              <span class="state-chip state-here"><span class="sdot"></span>VA: not yet</span>
+            </div>
+          </div>
+          <div class="pipe-card">
+            <div class="pipe-icon" style="background: var(--mint-soft); color: var(--mint);"><i class="fas fa-money-bill-trend-up"></i></div>
+            <div class="pipe-title">The $15+ minimum wage wave</div>
+            <div class="pipe-desc">California, New York, New Jersey, and Maryland are already at $15 or higher. Virginia just joined the wave — $15 by January 2028.</div>
+            <div class="pipe-states">
+              <span class="state-chip state-law"><span class="sdot"></span>CA · NY · NJ · MD</span>
+              <span class="state-chip state-here"><span class="sdot"></span>VA: law (2028)</span>
+            </div>
+          </div>
+          <div class="pipe-card">
+            <div class="pipe-icon" style="background: var(--lav-soft); color: var(--lav);"><i class="fas fa-baby-carriage"></i></div>
+            <div class="pipe-title">Paid family leave programs</div>
+            <div class="pipe-desc">Around a dozen states plus D.C. now run state paid family leave programs. Richmond has studied it several times — it keeps coming back.</div>
+            <div class="pipe-states">
+              <span class="state-chip state-law"><span class="sdot"></span>CA · NY · WA · CO +more</span>
+              <span class="state-chip state-here"><span class="sdot"></span>VA: keeps returning</span>
+            </div>
+          </div>
+          <div class="pipe-card">
+            <div class="pipe-icon" style="background: var(--sky-soft); color: var(--sky);"><i class="fas fa-calendar-week"></i></div>
+            <div class="pipe-title">Predictive scheduling</div>
+            <div class="pipe-desc">Oregon (statewide) and cities like NYC, Seattle, and San Francisco require posting worker schedules up to two weeks ahead. Retail and restaurants: watch this one.</div>
+            <div class="pipe-states">
+              <span class="state-chip state-law"><span class="sdot"></span>OR · NYC · SEA</span>
+              <span class="state-chip state-here"><span class="sdot"></span>VA: a 2026 bill tried</span>
+            </div>
+          </div>
+          <div class="pipe-card">
+            <div class="pipe-icon" style="background: var(--sun-soft); color: var(--sun);"><i class="fas fa-robot"></i></div>
+            <div class="pipe-title">AI rules for business</div>
+            <div class="pipe-desc">NYC audits AI hiring tools; Colorado's AI law arrives in 2026. Virginia passed its own AI bills this session — this one's already here.</div>
+            <div class="pipe-states">
+              <span class="state-chip state-law"><span class="sdot"></span>NYC · CO</span>
+              <span class="state-chip state-here"><span class="sdot"></span>VA: landing now</span>
+            </div>
+          </div>
+          <div class="pipe-card">
+            <div class="pipe-icon" style="background: var(--pink-soft); color: #C22A7C;"><i class="fas fa-shield-halved"></i></div>
+            <div class="pipe-title">Consumer data privacy</div>
+            <div class="pipe-desc">Virginia was the second state ever to pass a consumer data privacy law — now roughly 20 states have one. Sometimes the pipeline starts here.</div>
+            <div class="pipe-states">
+              <span class="state-chip state-law"><span class="sdot"></span>~20 states</span>
+              <span class="state-chip state-here"><span class="sdot"></span>VA: led the way</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- WATCH -->
       <div class="section-title">Watch your government at work — live</div>
       <div class="watch-grid">
@@ -1240,6 +1379,24 @@
           <div class="watch-actions">
             <a class="btn btn-ghost" href="https://virginiageneralassembly.gov/hs" target="_blank" rel="noopener"><i class="fas fa-calendar-days"></i> Meeting schedule & video</a>
             <a class="btn btn-ghost" href="https://hodspeak.house.virginia.gov/" target="_blank" rel="noopener"><i class="fas fa-microphone"></i> Sign up to speak</a>
+          </div>
+        </div>
+        <div class="watch-card">
+          <div class="watch-head">
+            <div class="watch-icon" style="background: var(--lav-soft); color: var(--lav);"><i class="fas fa-magnifying-glass-chart"></i></div>
+            <div>
+              <div class="watch-title">Know who you're talking to</div>
+              <div class="watch-sub">VPAP — Virginia Public Access Project</div>
+            </div>
+          </div>
+          <div class="watch-desc">
+            The nonpartisan gold standard for Virginia politics: who represents you, who funds
+            them, election results, and district maps. Check it before you email or testify —
+            two minutes here makes you sound like you've done this before.
+          </div>
+          <div class="watch-actions">
+            <a class="btn btn-ghost" href="https://www.vpap.org/general-assembly/" target="_blank" rel="noopener"><i class="fas fa-user-tie"></i> Legislator profiles</a>
+            <a class="btn btn-ghost" href="https://www.vpap.org/elections/" target="_blank" rel="noopener"><i class="fas fa-map"></i> Elections & maps</a>
           </div>
         </div>
       </div>
