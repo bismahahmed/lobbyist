@@ -7,12 +7,13 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FFB648'/%3E%3Cstop offset='0.5' stop-color='%23FF6B6B'/%3E%3Cstop offset='1' stop-color='%23C94FE0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M36 8 L18 36 L30 36 L26 56 L46 26 L33 26 Z' fill='white'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
+      --font-display: 'Bricolage Grotesque', 'Nunito', sans-serif;
       --bg: #F4F5FA;
       --card: #FFFFFF;
       --ink: #22283B;
@@ -63,7 +64,7 @@
 
     .page { position: relative; z-index: 1; }
 
-    h1, h2, h3, .display { font-family: 'Nunito', 'Inter', sans-serif; }
+    h1, h2, h3, .display { font-family: var(--font-display); }
 
     /* NAV */
     .nav {
@@ -83,7 +84,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--font-display);
       font-weight: 900;
       font-size: 25px;
       letter-spacing: -0.02em;
@@ -186,7 +187,89 @@
     .container { max-width: 1060px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
 
     /* HERO */
-    .hero { margin-bottom: 2.25rem; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 2.25rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 370px;
+    }
+
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 8% 2%;
+      background:
+        radial-gradient(closest-side, rgba(255, 107, 107, 0.13), transparent 70%),
+        radial-gradient(rgba(34, 40, 59, 0.13) 1px, transparent 1px);
+      background-size: 100% 100%, 26px 26px;
+      border-radius: 30px;
+    }
+
+    .fcard {
+      position: absolute;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 4px 10px rgba(34, 40, 59, 0.06), 0 24px 50px rgba(34, 40, 59, 0.14);
+      padding: 1rem 1.15rem;
+      animation: floaty 5.5s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+      50% { transform: translateY(-9px) rotate(var(--tilt, 0deg)); }
+    }
+
+    .fcard-main { top: 10%; left: 3%; right: 20%; --tilt: -1.6deg; }
+    .fcard-main .fc-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 0.5rem; }
+    .fcard-main .fc-title { font-family: var(--font-display); font-weight: 700; font-size: 14.5px; }
+    .fcard-main .fc-sum { font-size: 12px; color: var(--ink-soft); margin-bottom: 0.7rem; }
+    .fcard-main .fc-btns { display: flex; gap: 8px; }
+    .fcard-main .fc-btns .btn { font-size: 11px; padding: 0.45rem 0.85rem; pointer-events: none; }
+
+    .fcard-script { right: 0%; top: 48%; width: 60%; --tilt: 2.2deg; animation-delay: 0.9s; }
+    .fcard-script .fc-row { display: flex; align-items: center; gap: 10px; }
+    .fcard-script .fc-ic {
+      width: 34px; height: 34px; border-radius: 11px;
+      background: var(--mint-soft); color: var(--mint);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+      flex-shrink: 0;
+    }
+    .fcard-script .fc-t { font-size: 12.5px; font-weight: 700; line-height: 1.35; }
+    .fcard-script .fc-s { font-size: 11px; color: var(--ink-soft); font-weight: 500; }
+
+    .fcard-alert {
+      left: 6%; bottom: 3%; --tilt: -2.4deg; animation-delay: 1.7s;
+      display: flex; align-items: center; gap: 9px;
+      font-size: 12px; font-weight: 700; padding: 0.7rem 1rem;
+    }
+
+    .fcard-alert .dotp { width: 9px; height: 9px; border-radius: 50%; background: var(--coral); animation: blink 1.4s infinite; }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin: 3rem 0 0.1rem;
+    }
+
+    .eyebrow + .section-title { margin-top: 0.2rem; }
 
     .hero-kicker {
       display: inline-flex;
@@ -206,9 +289,9 @@
     .hero-kicker i { color: var(--pink); }
 
     .hero h1 {
-      font-size: clamp(30px, 4.6vw, 46px);
-      font-weight: 900;
-      letter-spacing: -0.02em;
+      font-size: clamp(30px, 4.6vw, 47px);
+      font-weight: 800;
+      letter-spacing: -0.035em;
       line-height: 1.12;
       margin-bottom: 0.8rem;
     }
@@ -400,7 +483,7 @@
     }
 
     .metric-value {
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--font-display);
       font-size: 32px;
       font-weight: 900;
       letter-spacing: -0.02em;
@@ -448,7 +531,7 @@
     .tab-content.active { display: block; animation: rise 0.35s ease both; }
 
     .section-title {
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--font-display);
       font-size: 19px;
       font-weight: 800;
       letter-spacing: -0.01em;
@@ -527,7 +610,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--font-display);
       font-size: 13.5px;
       font-weight: 900;
       color: var(--ink);
@@ -627,7 +710,7 @@
       margin-bottom: 0.7rem;
     }
 
-    .tour-tip h3 { font-family: 'Nunito', sans-serif; font-size: 16.5px; font-weight: 800; margin-bottom: 0.35rem; }
+    .tour-tip h3 { font-family: var(--font-display); font-size: 16.5px; font-weight: 800; margin-bottom: 0.35rem; }
     .tour-tip p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 1rem; }
     .tour-tip-actions { display: flex; gap: 8px; justify-content: flex-end; }
     .tour-tip-actions .btn { font-size: 12.5px; padding: 0.5rem 1rem; }
@@ -688,7 +771,7 @@
       margin-bottom: 0.3rem;
     }
 
-    .timeline-text { font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800; margin-bottom: 0.3rem; }
+    .timeline-text { font-family: var(--font-display); font-size: 16px; font-weight: 800; margin-bottom: 0.3rem; }
     .timeline-desc { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 0.8rem; }
 
     .template-box {
@@ -741,7 +824,7 @@
     .watch-icon.yt { background: #FDE8E5; color: #E02F2F; }
     .watch-icon.house { background: var(--sky-soft); color: var(--sky); }
 
-    .watch-title { font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800; }
+    .watch-title { font-family: var(--font-display); font-size: 16px; font-weight: 800; }
     .watch-sub { font-size: 12.5px; color: var(--ink-soft); font-weight: 500; }
 
     .watch-live {
@@ -806,7 +889,7 @@
       margin-bottom: 0.8rem;
     }
 
-    .pipe-title { font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 800; margin-bottom: 0.35rem; }
+    .pipe-title { font-family: var(--font-display); font-size: 15px; font-weight: 800; margin-bottom: 0.35rem; }
     .pipe-desc { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 0.9rem; flex: 1; }
 
     .pipe-states { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -926,7 +1009,7 @@
     }
 
     .trust-num {
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--font-display);
       font-size: 30px;
       font-weight: 900;
       letter-spacing: -0.02em;
@@ -969,7 +1052,7 @@
     .source-logo .lockup { display: flex; flex-direction: column; line-height: 1.15; }
 
     .source-logo .lname {
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--font-display);
       font-weight: 900;
       font-size: 13.5px;
       letter-spacing: 0.02em;
@@ -1027,7 +1110,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--font-display);
       font-weight: 900;
       font-size: 19px;
       color: white;
@@ -1052,7 +1135,7 @@
     .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.3, 1), transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1); }
     .reveal.in { opacity: 1; transform: none; }
 
-    .how-title { font-family: 'Nunito', sans-serif; font-size: 15.5px; font-weight: 800; margin-bottom: 0.4rem; }
+    .how-title { font-family: var(--font-display); font-size: 15.5px; font-weight: 800; margin-bottom: 0.4rem; }
     .how-desc { font-size: 13px; color: var(--ink-soft); }
 
     .how-play {
@@ -1088,7 +1171,7 @@
       color: var(--ink-soft);
     }
 
-    .footer .brand-sm { font-family: 'Nunito', sans-serif; font-weight: 900; color: var(--ink); }
+    .footer .brand-sm { font-family: var(--font-display); font-weight: 900; color: var(--ink); }
     .footer .brand-sm .iq { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
     /* MODAL */
@@ -1229,7 +1312,7 @@
       border-radius: 50%;
       background: var(--grad);
       color: white;
-      font-family: 'Nunito', sans-serif;
+      font-family: var(--font-display);
       font-weight: 900;
       font-size: 13px;
       display: flex;
@@ -1367,30 +1450,57 @@
 
       <!-- HERO -->
       <div class="hero">
-        <div class="hero-kicker"><i class="fas fa-graduation-cap"></i> The friendliest place to start if you know nothing about politics</div>
-        <h1>Politics feels complicated.<br><span class="grad">It doesn't have to be.</span></h1>
-        <p>Every Virginia bill turned into a short summary with bullet points — what changed, what it costs you, and exactly how to speak up. No law degree. No lobbyist. You've got this.</p>
-        <div class="selectors" style="align-items: center;">
-          <button class="btn btn-grad" onclick="startTour()" style="font-size: 13px;"><i class="fas fa-wand-magic-sparkles"></i> Take the 30-second tour</button>
+        <div class="hero-copy">
+          <div class="hero-kicker"><i class="fas fa-graduation-cap"></i> The friendliest place to start if you know nothing about politics</div>
+          <h1>Politics feels complicated.<br><span class="grad">It doesn't have to be.</span></h1>
+          <p>Every Virginia bill turned into a short summary with bullet points — what changed, what it costs you, and exactly how to speak up. No law degree. No lobbyist. You've got this.</p>
+          <div class="selectors" style="align-items: center;">
+            <button class="btn btn-grad" onclick="startTour()" style="font-size: 13px;"><i class="fas fa-wand-magic-sparkles"></i> Take the 30-second tour</button>
+          </div>
+          <div class="selectors" style="margin-top: 10px;">
+            <select id="stateFilter">
+              <option value="VA">Virginia</option>
+              <option value="MD">Maryland</option>
+              <option value="NC">North Carolina</option>
+              <option value="TX">Texas</option>
+              <option value="CA">California</option>
+            </select>
+            <select id="industryFilter">
+              <option value="">All industries</option>
+              <option value="restaurants">Restaurants</option>
+              <option value="retail">Retail</option>
+              <option value="childcare">Childcare</option>
+              <option value="construction">Construction</option>
+              <option value="hospitality">Hospitality</option>
+            </select>
+          </div>
+          <div id="syncBadge"></div>
         </div>
-        <div class="selectors" style="margin-top: 10px;">
-          <select id="stateFilter">
-            <option value="VA">Virginia</option>
-            <option value="MD">Maryland</option>
-            <option value="NC">North Carolina</option>
-            <option value="TX">Texas</option>
-            <option value="CA">California</option>
-          </select>
-          <select id="industryFilter">
-            <option value="">All industries</option>
-            <option value="restaurants">Restaurants</option>
-            <option value="retail">Retail</option>
-            <option value="childcare">Childcare</option>
-            <option value="construction">Construction</option>
-            <option value="hospitality">Hospitality</option>
-          </select>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="fcard fcard-main">
+            <div class="fc-head">
+              <span class="fc-title">Minimum wage → $15 by 2028</span>
+              <span class="status-pill pill-done"><i class="fas fa-check"></i>Now law</span>
+            </div>
+            <div class="fc-sum">HB 1 · Chapter 350 · effective Jul 1, 2026</div>
+            <div class="fc-btns">
+              <span class="btn btn-grad"><i class="fas fa-microphone"></i> Testify</span>
+              <span class="btn btn-ghost">What it means</span>
+            </div>
+          </div>
+          <div class="fcard fcard-script">
+            <div class="fc-row">
+              <div class="fc-ic"><i class="fas fa-file-lines"></i></div>
+              <div>
+                <div class="fc-t">Your testimony script is ready</div>
+                <div class="fc-s">60 seconds · sounds like you</div>
+              </div>
+            </div>
+          </div>
+          <div class="fcard fcard-alert">
+            <span class="dotp"></span> 3 new laws affect your business
+          </div>
         </div>
-        <div id="syncBadge"></div>
       </div>
 
       <!-- TRUST STRIP -->
@@ -1500,6 +1610,7 @@
       </div>
 
       <!-- PIPELINE RADAR -->
+      <div class="eyebrow">Trend radar</div>
       <div class="section-title">Coming down the pipeline</div>
       <p style="font-size: 13.5px; color: var(--ink-soft); margin: -0.4rem 0 0.9rem; max-width: 640px;">
         Policy travels. What California and New York pass today tends to show up in Richmond a few sessions later — here's what's spreading, so nothing sneaks up on you.
@@ -1570,7 +1681,8 @@
       </div>
 
       <!-- WATCH -->
-      <div class="section-title">Watch your government at work — live</div>
+      <div class="eyebrow">Live & recorded</div>
+      <div class="section-title">Watch your government at work</div>
       <div class="watch-grid">
         <div class="watch-card">
           <div class="watch-head">
@@ -1628,6 +1740,7 @@
       </div>
 
       <!-- COMMUNITY -->
+      <div class="eyebrow">Community</div>
       <div class="section-title">You're not doing this alone</div>
       <div class="community-grid">
         <div class="community-card">
