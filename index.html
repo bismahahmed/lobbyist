@@ -12,27 +12,30 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #FAF7F1;
+      --bg: #FFF9F0;
       --card: #FFFFFF;
-      --ink: #243247;
-      --ink-soft: #66708A;
-      --ink-faint: #98A0B3;
-      --line: #ECE5D8;
-      --line-strong: #DFD6C6;
-      --coral: #F4593B;
-      --coral-deep: #C93E24;
-      --coral-soft: #FDEAE5;
-      --grad: linear-gradient(135deg, #FF8A5C 0%, #F4593B 55%, #E8447A 100%);
-      --mint: #17976F;
-      --mint-soft: #E2F4EC;
-      --sky: #3B6FE0;
-      --sky-soft: #E8EFFC;
-      --sun: #B97A1C;
-      --sun-soft: #FBF0DB;
-      --lav: #7A5BD6;
-      --lav-soft: #EFEAFB;
-      --shadow: 0 2px 6px rgba(36, 50, 71, 0.05), 0 12px 32px rgba(36, 50, 71, 0.07);
-      --shadow-lift: 0 4px 10px rgba(36, 50, 71, 0.07), 0 18px 44px rgba(36, 50, 71, 0.10);
+      --ink: #22283B;
+      --ink-soft: #5C6478;
+      --ink-faint: #9098AC;
+      --line: #F0E6D6;
+      --line-strong: #E3D5BC;
+      --coral: #FF5E62;
+      --coral-deep: #E23E4E;
+      --coral-soft: #FFE7E0;
+      --grad: linear-gradient(135deg, #FFB648 0%, #FF6B6B 50%, #C94FE0 100%);
+      --grad-cool: linear-gradient(135deg, #4FD0C6 0%, #4F8EF7 100%);
+      --mint: #16A085;
+      --mint-soft: #D7F5EC;
+      --sky: #2F80ED;
+      --sky-soft: #E1EEFF;
+      --sun: #E8A400;
+      --sun-soft: #FFF3D6;
+      --lav: #9B5DE5;
+      --lav-soft: #F3E8FF;
+      --pink: #F15BB5;
+      --pink-soft: #FFE3F3;
+      --shadow: 0 2px 6px rgba(34, 40, 59, 0.05), 0 12px 32px rgba(34, 40, 59, 0.07);
+      --shadow-lift: 0 4px 10px rgba(34, 40, 59, 0.08), 0 18px 44px rgba(34, 40, 59, 0.12);
     }
 
     html { scroll-behavior: smooth; }
@@ -52,9 +55,11 @@
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(560px 380px at 88% -4%, rgba(255, 138, 92, 0.12), transparent 60%),
-        radial-gradient(640px 460px at -8% 24%, rgba(122, 91, 214, 0.07), transparent 60%),
-        radial-gradient(520px 400px at 55% 108%, rgba(23, 151, 111, 0.07), transparent 60%);
+        radial-gradient(600px 420px at 90% -6%, rgba(255, 182, 72, 0.18), transparent 60%),
+        radial-gradient(560px 420px at 100% 30%, rgba(241, 91, 181, 0.13), transparent 60%),
+        radial-gradient(680px 480px at -10% 20%, rgba(155, 93, 229, 0.13), transparent 60%),
+        radial-gradient(560px 440px at 15% 100%, rgba(79, 208, 198, 0.14), transparent 60%),
+        radial-gradient(520px 400px at 75% 105%, rgba(47, 128, 237, 0.10), transparent 60%);
     }
 
     .page { position: relative; z-index: 1; }
@@ -169,18 +174,18 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--card);
-      border: 1px solid var(--line);
+      background: linear-gradient(120deg, var(--pink-soft), var(--lav-soft) 60%, var(--sky-soft));
+      border: 1px solid #F0DCEE;
       border-radius: 999px;
       box-shadow: var(--shadow);
-      padding: 0.45rem 1rem;
+      padding: 0.45rem 1.1rem;
       font-size: 13px;
-      font-weight: 600;
-      color: var(--ink-soft);
+      font-weight: 700;
+      color: #7A3FA0;
       margin-bottom: 1.2rem;
     }
 
-    .hero-kicker i { color: var(--coral); }
+    .hero-kicker i { color: var(--pink); }
 
     .hero h1 {
       font-size: clamp(30px, 4.6vw, 46px);
@@ -334,11 +339,26 @@
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 20px;
-      padding: 1.25rem 1.35rem;
+      padding: 1.35rem 1.35rem 1.25rem;
       box-shadow: var(--shadow);
       transition: transform 0.2s, box-shadow 0.2s;
       animation: rise 0.5s ease both;
+      position: relative;
+      overflow: hidden;
     }
+
+    .metric::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: var(--bar, var(--grad));
+    }
+
+    .metric:nth-child(1) { --bar: linear-gradient(90deg, #FF8A65, #FF5E62); }
+    .metric:nth-child(2) { --bar: linear-gradient(90deg, #4FD0C6, #2F80ED); }
+    .metric:nth-child(3) { --bar: linear-gradient(90deg, #FFC24B, #E8A400); }
+    .metric:nth-child(4) { --bar: linear-gradient(90deg, #C77DFF, #9B5DE5); }
 
     .metric:nth-child(2) { animation-delay: 0.06s; }
     .metric:nth-child(3) { animation-delay: 0.12s; }
@@ -455,8 +475,20 @@
     .bill-title-row { flex: 1; min-width: 0; }
     .bill-title-row h3 { font-size: 16.5px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.35rem; }
 
-    .bill-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; font-weight: 500; color: var(--ink-faint); }
+    .bill-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; font-weight: 500; color: var(--ink-faint); align-items: center; }
     .bill-meta span { display: flex; align-items: center; gap: 5px; }
+
+    .cat-chip {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+    }
+    .cat-labor { background: var(--pink-soft); color: #C22A7C; }
+    .cat-health { background: var(--mint-soft); color: var(--mint); }
+    .cat-tax { background: var(--sun-soft); color: var(--sun); }
+    .cat-legal { background: var(--sky-soft); color: var(--sky); }
+    .cat-general { background: var(--lav-soft); color: var(--lav); }
 
     .bill-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 
@@ -660,6 +692,54 @@
     .community-icon.c1 { background: var(--sky-soft); color: var(--sky); }
     .community-icon.c2 { background: var(--lav-soft); color: var(--lav); }
     .community-icon.c3 { background: var(--mint-soft); color: var(--mint); }
+
+    /* HOW IT WORKS */
+    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 2.4rem; }
+
+    .how-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 1.4rem 1.4rem 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .how-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+
+    .how-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 15px;
+      color: white;
+      margin-bottom: 0.9rem;
+    }
+
+    .how-title { font-family: 'Nunito', sans-serif; font-size: 15.5px; font-weight: 800; margin-bottom: 0.4rem; }
+    .how-desc { font-size: 13px; color: var(--ink-soft); }
+
+    .how-play {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2.5rem;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--coral-deep);
+      background: var(--coral-soft);
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border: none;
+    }
+    .how-play:hover { background: #FFD9CE; }
 
     .community-card h3 { font-size: 15px; font-weight: 800; margin-bottom: 0.4rem; }
     .community-card p { font-size: 13px; color: var(--ink-soft); }
@@ -978,6 +1058,30 @@
           </select>
         </div>
         <div id="syncBadge"></div>
+      </div>
+
+      <!-- HOW IT WORKS -->
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-num" style="background: linear-gradient(135deg,#FF8A65,#FF5E62);">1</div>
+          <div class="how-title">Pick your state & industry</div>
+          <div class="how-desc">We scan every bill so you don't have to — and show you only the ones that touch your world.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-num" style="background: linear-gradient(135deg,#4FD0C6,#2F80ED);">2</div>
+          <div class="how-title">Read it in plain English</div>
+          <div class="how-desc">What changed, what it costs or saves you, and when it kicks in — no legal jargon.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-num" style="background: linear-gradient(135deg,#FFC24B,#E8A400);">3</div>
+          <div class="how-title">Speak up in minutes</div>
+          <div class="how-desc">Email your delegate, or sign up to testify from home with a script we help you write.</div>
+        </div>
+        <div class="how-card">
+          <div class="how-num" style="background: linear-gradient(135deg,#C77DFF,#9B5DE5);">4</div>
+          <div class="how-title">Share what you did</div>
+          <div class="how-desc">Clip your testimony and post it — proof you showed up for your community.</div>
+        </div>
       </div>
 
       <!-- BREAKING -->
@@ -1647,6 +1751,16 @@
       }
     }
 
+    function catChipClass(category) {
+      const map = {
+        'Labor': 'cat-labor',
+        'Health & Safety': 'cat-health',
+        'Tax & Fees': 'cat-tax',
+        'Legal': 'cat-legal'
+      };
+      return map[category] || 'cat-general';
+    }
+
     function billCard(bill, delay) {
       const [pillClass, pillIcon, pillText] = pillFor(bill);
       const score = iqScore(bill);
@@ -1662,6 +1776,7 @@
             <div class="bill-title-row">
               <h3>${bill.title}</h3>
               <div class="bill-meta">
+                <span class="cat-chip ${catChipClass(bill.category)}">${bill.category || 'General'}</span>
                 <span><i class="fas fa-file-lines"></i>${bill.state} · ${bill.bill}</span>
                 <span><i class="fas fa-user"></i>${bill.patron}</span>
                 <span><i class="fas fa-calendar"></i>${effLabel}</span>
