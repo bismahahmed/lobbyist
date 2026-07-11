@@ -664,6 +664,106 @@
       margin-top: 2px;
     }
 
+    /* IMPACT REPORT CTA */
+    .report-cta {
+      background: linear-gradient(120deg, #FFF1E8 0%, #FFE9F2 45%, #F1EBFF 100%);
+      border: 1px solid #F4DDE8;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 2rem 2.2rem;
+      margin: 2.4rem 0 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .report-cta-copy { flex: 1; min-width: 260px; }
+
+    .report-cta h2 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .report-cta p { font-size: 13.5px; color: var(--ink-soft); max-width: 520px; }
+
+    .report-cta .btn { font-size: 14px; padding: 0.85rem 1.5rem; }
+
+    /* REPORT VIEW */
+    #reportView {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #EEF0F6;
+      z-index: 3000;
+      overflow-y: auto;
+      padding: 2rem 1rem 4rem;
+    }
+
+    #reportView.active { display: block; }
+
+    .report-toolbar {
+      max-width: 800px;
+      margin: 0 auto 1rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .report-doc {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 24px 70px rgba(34, 40, 59, 0.18);
+      overflow: hidden;
+    }
+
+    .rd-head {
+      background: linear-gradient(120deg, #22283B 0%, #2C2A4E 100%);
+      color: white;
+      padding: 2rem 2.4rem;
+    }
+
+    .rd-brand { display: flex; align-items: center; gap: 9px; font-family: var(--font-display); font-weight: 800; font-size: 15px; margin-bottom: 1.2rem; }
+    .rd-brand .bolt {
+      width: 26px; height: 26px; border-radius: 8px; background: var(--grad);
+      display: inline-flex; align-items: center; justify-content: center; font-size: 12px;
+    }
+    .rd-brand .iq { background: linear-gradient(135deg, #FFC24B, #FF7A7A); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .rd-head h1 { font-family: var(--font-display); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 0.4rem; color: white; }
+    .rd-head .rd-sub { font-size: 13px; color: #A9B1C9; }
+
+    .rd-body { padding: 2rem 2.4rem 2.4rem; }
+
+    .rd-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.8rem; }
+    .rd-stat { background: #F6F7FB; border: 1px solid var(--line); border-radius: 14px; padding: 0.9rem 1rem; text-align: center; }
+    .rd-stat .n { font-family: var(--font-display); font-size: 24px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .rd-stat .l { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
+
+    .rd-section { font-family: var(--font-display); font-size: 15px; font-weight: 800; letter-spacing: -0.01em; margin: 1.6rem 0 0.8rem; padding-bottom: 0.4rem; border-bottom: 2px solid #F0F1F7; }
+
+    .rd-bill { padding: 0.9rem 0; border-bottom: 1px solid #F0F1F7; }
+    .rd-bill-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 0.25rem; }
+    .rd-bill-title { font-weight: 700; font-size: 13.5px; }
+    .rd-bill-meta { font-size: 11px; font-weight: 600; color: var(--ink-faint); white-space: nowrap; }
+    .rd-bill-impact { font-size: 12.5px; color: var(--ink-soft); }
+    .rd-bill a { color: var(--sky); text-decoration: none; font-weight: 600; font-size: 11.5px; }
+
+    .rd-note { margin-top: 1.6rem; padding: 0.9rem 1.1rem; background: #F6F7FB; border-radius: 12px; font-size: 11px; color: var(--ink-faint); line-height: 1.6; }
+
+    @media print {
+      body > .page, .modal, .tour-overlay, .report-toolbar { display: none !important; }
+      #reportView { position: static; background: white; padding: 0; overflow: visible; }
+      .report-doc { box-shadow: none; border-radius: 0; max-width: none; }
+      .rd-head { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
     /* GUIDED TOUR */
     .tour-overlay {
       position: fixed;
@@ -1568,6 +1668,15 @@
         </div>
       </div>
 
+      <!-- IMPACT REPORT CTA -->
+      <div class="report-cta">
+        <div class="report-cta-copy">
+          <h2>Your personalized impact report — in 30 seconds</h2>
+          <p>Tell us four things about your business and get a polished, printable report: the exact laws that affect you, when they hit, and what to do about each one.</p>
+        </div>
+        <button class="btn btn-grad" onclick="openReportModal()"><i class="fas fa-file-invoice"></i> Generate my free report</button>
+      </div>
+
       <!-- BREAKING -->
       <div id="breakingAlert" class="breaking" style="display: none;">
         <div class="breaking-top">
@@ -1978,6 +2087,52 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- REPORT FORM MODAL -->
+  <div id="reportModal" class="modal">
+    <div class="modal-content" style="max-width: 520px;">
+      <div class="modal-header">
+        <h2><i class="fas fa-file-invoice" style="color: var(--coral); margin-right: 8px;"></i>Your impact report</h2>
+        <button class="modal-close" onclick="closeReportModal()"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="form-group">
+        <label>Business or organization name</label>
+        <input type="text" id="rBiz" placeholder="Tres Tacos" />
+      </div>
+      <div class="form-group">
+        <label>Industry</label>
+        <div class="seg-row" id="rIndustryRow" style="margin-bottom: 0;">
+          <div class="seg active" data-ind="restaurants" onclick="setReportIndustry(this)">Restaurants</div>
+          <div class="seg" data-ind="retail" onclick="setReportIndustry(this)">Retail</div>
+          <div class="seg" data-ind="childcare" onclick="setReportIndustry(this)">Childcare</div>
+        </div>
+        <div class="seg-row" style="margin-top: 8px; margin-bottom: 0;">
+          <div class="seg" data-ind="construction" onclick="setReportIndustry(this)">Construction</div>
+          <div class="seg" data-ind="hospitality" onclick="setReportIndustry(this)">Hospitality</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="form-group">
+          <label>City or county</label>
+          <input type="text" id="rCity" placeholder="Arlington" />
+        </div>
+        <div class="form-group">
+          <label>Employees</label>
+          <input type="number" id="rEmp" placeholder="20" min="1" step="1" />
+        </div>
+      </div>
+      <button class="btn btn-grad" onclick="generateReport()" style="width: 100%;"><i class="fas fa-wand-magic-sparkles"></i> Build my report</button>
+    </div>
+  </div>
+
+  <!-- REPORT VIEW -->
+  <div id="reportView">
+    <div class="report-toolbar">
+      <button class="btn btn-grad" onclick="window.print()"><i class="fas fa-print"></i> Print / Save as PDF</button>
+      <button class="btn btn-ghost" onclick="closeReport()"><i class="fas fa-xmark"></i> Close</button>
+    </div>
+    <div class="report-doc" id="reportDoc"></div>
   </div>
 
   <script src="bills-data.js"></script>
@@ -2945,6 +3100,102 @@ You can do this too — link in bio.
     function copyCaption(id) {
       navigator.clipboard.writeText(document.getElementById(id).textContent);
       alert('Caption copied!');
+    }
+
+    // ===== IMPACT REPORT =====
+    let reportIndustry = 'restaurants';
+
+    function openReportModal() {
+      document.getElementById('reportModal').classList.add('active');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.remove('active');
+    }
+
+    function setReportIndustry(el) {
+      reportIndustry = el.dataset.ind;
+      document.querySelectorAll('#reportModal .seg').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function closeReport() {
+      document.getElementById('reportView').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function reportBillRow(b) {
+      const eff = b.effectiveDate ? fmtDate(b.effectiveDate) + (b.effectiveEstimated ? ' (est.)' : '') : '—';
+      const chap = b.chapter ? ' · Ch. ' + parseInt(b.chapter.replace(/\D/g, ''), 10) : '';
+      return `
+        <div class="rd-bill">
+          <div class="rd-bill-top">
+            <span class="rd-bill-title">${b.title}</span>
+            <span class="rd-bill-meta">${b.bill}${chap} · ${b.status} · IQ ${iqScore(b)}</span>
+          </div>
+          <div class="rd-bill-impact">${b.impact} ${b.status === 'Enacted' ? 'In effect: ' + eff + '.' : ''}
+            ${b.lisLink ? `<a href="${b.lisLink}" target="_blank" rel="noopener">Read on LIS →</a>` : ''}
+          </div>
+        </div>`;
+    }
+
+    function generateReport() {
+      const biz = document.getElementById('rBiz').value.trim() || 'Your business';
+      const city = document.getElementById('rCity').value.trim() || 'Virginia';
+      const emp = parseInt(document.getElementById('rEmp').value, 10) || null;
+
+      const pool = BILLS.filter(b => b.state === 'VA' &&
+        (b.industries.includes(reportIndustry) || b.industries.includes('all')))
+        .sort((a, b) => iqScore(b) - iqScore(a));
+
+      const enacted = pool.filter(b => b.status === 'Enacted');
+      const moving = pool.filter(b => ['Carried over', 'In progress', 'Passed — awaiting Governor'].includes(b.status));
+      const dead = pool.filter(b => ['Defeated', 'Vetoed'].includes(b.status));
+
+      const genDate = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      const indLabel = reportIndustry.charAt(0).toUpperCase() + reportIndustry.slice(1);
+
+      document.getElementById('reportDoc').innerHTML = `
+        <div class="rd-head">
+          <div class="rd-brand"><span class="bolt"><i class="fas fa-bolt"></i></span> Lobbyist<span class="iq">IQ</span></div>
+          <h1>${biz} — 2026 Virginia Legislative Impact Report</h1>
+          <div class="rd-sub">${indLabel} · ${city}, Virginia${emp ? ' · ' + emp + ' employees' : ''} · Generated ${genDate}</div>
+        </div>
+        <div class="rd-body">
+          <div class="rd-stats">
+            <div class="rd-stat"><div class="n">${pool.length}</div><div class="l">bills affect your business</div></div>
+            <div class="rd-stat"><div class="n">${enacted.length}</div><div class="l">became law this session</div></div>
+            <div class="rd-stat"><div class="n">${moving.length}</div><div class="l">still moving or returning</div></div>
+          </div>
+
+          <div class="rd-section"><i class="fas fa-gavel" style="color: var(--mint); margin-right: 6px;"></i>Now law — your compliance list</div>
+          ${enacted.slice(0, 7).map(reportBillRow).join('') || '<p style="font-size:12.5px;color:var(--ink-soft);">No enacted bills matched your industry this session.</p>'}
+
+          <div class="rd-section"><i class="fas fa-arrows-rotate" style="color: var(--sun); margin-right: 6px;"></i>Watch list — moving or coming back in 2027</div>
+          ${moving.slice(0, 5).map(reportBillRow).join('') || '<p style="font-size:12.5px;color:var(--ink-soft);">Nothing on the watch list right now.</p>'}
+
+          ${dead.length ? `<div class="rd-section"><i class="fas fa-shield" style="color: var(--ink-faint); margin-right: 6px;"></i>Dodged this year — defeated or vetoed</div>` + dead.slice(0, 3).map(reportBillRow).join('') : ''}
+
+          <div class="rd-section"><i class="fas fa-list-check" style="color: var(--coral); margin-right: 6px;"></i>Your action plan</div>
+          <div class="rd-bill"><div class="rd-bill-title">1. Review the compliance list above before your next staff meeting</div>
+            <div class="rd-bill-impact">Most new laws took effect July 1, 2026. Start with the highest IQ scores.</div></div>
+          <div class="rd-bill"><div class="rd-bill-title">2. Get on record about the watch list — from home</div>
+            <div class="rd-bill-impact">Virginia lets you testify remotely. LobbyistIQ walks you through signup and writes your script with you.</div></div>
+          <div class="rd-bill"><div class="rd-bill-title">3. Check who represents you before you reach out</div>
+            <div class="rd-bill-impact">Look up your legislators and their districts at vpap.org — two minutes of homework that makes you credible.</div></div>
+
+          <div class="rd-note">
+            Generated by LobbyistIQ from official Virginia LIS data (${typeof VA_SESSION !== 'undefined' ? VA_SESSION.name + ', ' + VA_SESSION.totalBills.toLocaleString() + ' bills scanned, updated ' + VA_SESSION.updated : '2026'}).
+            Effective dates for enacted bills are estimated using Virginia's default (July 1 after session) unless specified in bill text.
+            This report is for general information only and is not legal advice — confirm details with counsel or on lis.virginia.gov before acting.
+          </div>
+        </div>
+      `;
+
+      closeReportModal();
+      document.getElementById('reportView').classList.add('active');
+      document.getElementById('reportView').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
     }
 
     // ===== GUIDED TOUR =====
