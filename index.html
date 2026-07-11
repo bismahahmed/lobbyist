@@ -1067,6 +1067,9 @@
       margin-bottom: 1.1rem;
     }
 
+    .trust-kicker a { color: #8B5CF6; text-decoration: none; }
+    .trust-kicker a:hover { text-decoration: underline; }
+
     .trust-stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -1633,7 +1636,7 @@
 
       <!-- TRUST STRIP -->
       <div class="trust-strip" id="trustStrip">
-        <div class="trust-kicker">Powered by Virginia's official systems</div>
+        <div class="trust-kicker" id="trustKicker">Powered by Virginia's official systems</div>
         <div class="trust-stats">
           <div class="trust-stat">
             <div class="trust-num" id="trustBills">3,646</div>
@@ -2408,6 +2411,8 @@
 
     function updateTrustStrip() {
       if (typeof VA_SESSION === 'undefined') return;
+      document.getElementById('trustKicker').innerHTML =
+        `Powered by Virginia's official systems · synced with <a href="https://lis.virginia.gov" target="_blank" rel="noopener">lis.virginia.gov</a> · updated ${VA_SESSION.updated}`;
       const pairs = [
         ['trustBills', VA_SESSION.totalBills],
         ['trustBriefs', VA_SESSION.matched],
@@ -2435,14 +2440,8 @@
 
     function renderSyncBadge() {
       const el = document.getElementById('syncBadge');
-      if (selectedState === 'VA' && typeof VA_SESSION !== 'undefined') {
-        el.innerHTML = `
-          <div class="sync-badge">
-            <span class="pulse-dot"></span>
-            Synced with <a href="https://lis.virginia.gov" target="_blank" rel="noopener">lis.virginia.gov</a>
-            · ${VA_SESSION.name} · ${VA_SESSION.totalBills.toLocaleString()} bills scanned
-            · ${VA_SESSION.matched} matter to your industries · updated ${VA_SESSION.updated}
-          </div>`;
+      if (selectedState === 'VA') {
+        el.innerHTML = '';
       } else {
         el.innerHTML = `
           <div class="sync-badge demo-badge">
