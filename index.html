@@ -270,6 +270,53 @@
 
     .eyebrow + .section-title { margin-top: 0.2rem; }
 
+    .state-strip {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-bottom: 1.3rem;
+    }
+
+    .state-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: var(--card);
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      padding: 0.55rem 0.75rem 0.45rem;
+      cursor: pointer;
+      color: var(--ink-soft);
+      box-shadow: var(--shadow);
+      transition: all 0.2s;
+      min-width: 64px;
+    }
+
+    .state-tile svg {
+      width: 30px;
+      height: 30px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 3.4;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .state-tile .st-abbr { font-family: var(--font-display); font-weight: 800; font-size: 12.5px; letter-spacing: 0.03em; }
+    .state-tile .st-tag { font-size: 8px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); }
+
+    .state-tile:hover { transform: translateY(-2px); color: var(--ink); border-color: #A78BFA; }
+
+    .state-tile.active {
+      background: var(--grad);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
+    }
+
+    .state-tile.active .st-tag { color: rgba(255, 255, 255, 0.75); }
+
     .hero-kicker {
       display: inline-flex;
       align-items: center;
@@ -1582,6 +1629,7 @@
       <!-- HERO -->
       <div class="hero">
         <div class="hero-copy">
+          <div class="state-strip" id="stateStrip"></div>
           <div class="hero-kicker"><i class="fas fa-graduation-cap"></i> The friendliest place to start if you know nothing about politics</div>
           <h1>Politics feels complicated.<br><span class="grad">It doesn't have to be.</span></h1>
           <p>Every Virginia bill turned into a short summary with bullet points — what changed, what it costs you, and exactly how to speak up. No law degree. No lobbyist. You've got this.</p>
@@ -1591,6 +1639,7 @@
           <div class="selectors" style="margin-top: 10px;">
             <select id="stateFilter">
               <option value="VA">Virginia</option>
+              <option value="NJ">New Jersey</option>
               <option value="MD">Maryland</option>
               <option value="NC">North Carolina</option>
               <option value="TX">Texas</option>
@@ -2403,6 +2452,7 @@
       renderActionPlan();
       renderFilters();
       renderSyncBadge();
+      renderStateStrip();
       updateTrustStrip();
       document.getElementById('navSession').textContent = `Live · ${STATES[selectedState]} 2026`;
     }
@@ -3239,6 +3289,34 @@ You can do this too — link in bio.
       document.getElementById('reportView').classList.add('active');
       document.getElementById('reportView').scrollTop = 0;
       document.body.style.overflow = 'hidden';
+    }
+
+    // ===== STATE STRIP =====
+    const STATE_SHAPES = {
+      VA: 'M4 46 L16 34 L22 36 L28 26 L36 30 L42 20 L50 24 L56 16 L60 22 L54 32 L58 30 L60 36 L44 46 L24 50 Z',
+      NJ: 'M28 6 L38 10 L36 18 L42 26 L38 36 L30 52 L24 44 L26 34 L22 26 L26 16 Z',
+      MD: 'M6 26 L36 22 L58 24 L58 32 L50 44 L46 34 L40 46 L32 40 L34 30 L10 34 Z',
+      NC: 'M4 42 L20 30 L44 26 L54 30 L60 26 L56 36 L48 38 L52 44 L36 46 L20 44 L8 48 Z',
+      TX: 'M26 4 L36 4 L36 22 L50 24 L58 32 L54 40 L44 44 L40 58 L32 50 L22 44 L10 40 L18 30 L26 26 Z',
+      CA: 'M14 4 L30 8 L28 22 L48 46 L46 56 L32 58 L24 50 L16 30 Z'
+    };
+
+    function renderStateStrip() {
+      const el = document.getElementById('stateStrip');
+      if (!el) return;
+      el.innerHTML = Object.keys(STATES).map(code => `
+        <button class="state-tile ${code === selectedState ? 'active' : ''}" onclick="pickState('${code}')" aria-label="${STATES[code]}">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="${STATE_SHAPES[code] || ''}"/></svg>
+          <span class="st-abbr">${code}</span>
+          <span class="st-tag">${code === 'VA' ? 'Live data' : 'Sample'}</span>
+        </button>
+      `).join('');
+    }
+
+    function pickState(code) {
+      selectedState = code;
+      document.getElementById('stateFilter').value = code;
+      renderAll();
     }
 
     // ===== STEP CARD ACTIONS =====

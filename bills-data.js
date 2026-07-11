@@ -10,6 +10,7 @@
 
 const STATES = {
   "VA": "Virginia",
+  "NJ": "New Jersey",
   "MD": "Maryland",
   "NC": "North Carolina",
   "TX": "Texas",
@@ -3584,6 +3585,88 @@ const BILLS = [
     "urgency": "low",
     "lisLink": "https://lis.virginia.gov/bill-details/20261/SB85",
     "lastUpdate": "3/9/2026"
+  },
+  {
+    "state": "NJ",
+    "bill": "S 2310",
+    "title": "Temporary workers' bill of rights expansion",
+    "patron": "Sen. Cruz",
+    "category": "Labor",
+    "status": "In progress",
+    "effectiveDate": "2027-01-01",
+    "industries": [
+      "all"
+    ],
+    "summary": "Expands scheduling, pay transparency, and equal-pay protections for temporary and staffing-agency workers. (SAMPLE DATA)",
+    "impact": "Staffing-agency arrangements would need new documentation and pay parity review.",
+    "urgency": "high",
+    "breaking": true,
+    "demo": true
+  },
+  {
+    "state": "NJ",
+    "bill": "A 1780",
+    "title": "Liquor license availability reform for restaurants",
+    "patron": "Asm. Patel",
+    "category": "Legal",
+    "status": "In progress",
+    "effectiveDate": "2027-01-01",
+    "industries": [
+      "restaurants",
+      "hospitality"
+    ],
+    "summary": "Phases in new restaurant liquor licenses by municipality and creates a transfer credit for existing license holders. (SAMPLE DATA)",
+    "impact": "Could finally make licenses attainable for independents \u2014 and change resale values for current holders.",
+    "urgency": "high",
+    "demo": true
+  },
+  {
+    "state": "NJ",
+    "bill": "S 1450",
+    "title": "AI hiring tools: bias audit requirement",
+    "patron": "Sen. Okafor",
+    "category": "Legal",
+    "status": "In progress",
+    "effectiveDate": "2027-06-01",
+    "industries": [
+      "all"
+    ],
+    "summary": "Requires annual independent bias audits and candidate notice for automated hiring decision tools. (SAMPLE DATA)",
+    "impact": "If you use AI screening software, your vendor's compliance becomes your problem.",
+    "urgency": "medium",
+    "demo": true
+  },
+  {
+    "state": "NJ",
+    "bill": "A 2004",
+    "title": "Minimum wage annual indexing adjustment",
+    "patron": "Asm. Rivera",
+    "category": "Labor",
+    "status": "In progress",
+    "effectiveDate": "2027-01-01",
+    "industries": [
+      "all"
+    ],
+    "summary": "Adjusts the formula for annual CPI-based minimum wage increases and tipped-wage credit. (SAMPLE DATA)",
+    "impact": "Changes how fast the wage floor moves each January.",
+    "urgency": "medium",
+    "demo": true
+  },
+  {
+    "state": "NJ",
+    "bill": "A 3110",
+    "title": "Childcare facility grants and ratio flexibility",
+    "patron": "Asm. Chen",
+    "category": "Health & Safety",
+    "status": "In progress",
+    "effectiveDate": "2027-01-01",
+    "industries": [
+      "childcare"
+    ],
+    "summary": "Creates facility improvement grants and pilot flexibility on staff ratios for high-rated providers. (SAMPLE DATA)",
+    "impact": "Grant money plus operating flexibility for quality-rated centers.",
+    "urgency": "medium",
+    "demo": true
   },
   {
     "state": "MD",

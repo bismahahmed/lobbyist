@@ -225,8 +225,8 @@ def main():
 
     js = header
     js += "const STATES = " + json.dumps({
-        "VA": "Virginia", "MD": "Maryland", "NC": "North Carolina",
-        "TX": "Texas", "CA": "California"}, indent=2) + ";\n\n"
+        "VA": "Virginia", "NJ": "New Jersey", "MD": "Maryland",
+        "NC": "North Carolina", "TX": "Texas", "CA": "California"}, indent=2) + ";\n\n"
     js += f"const VA_SESSION = {json.dumps({'code': SESSION, 'name': f'{SESSION_YEAR} Regular Session', 'totalBills': len(rows), 'matched': len(va_bills), 'enacted': enacted, 'updated': date.today().isoformat()})};\n\n"
     js += "const BILLS = " + json.dumps(va_bills + demo_states, indent=2) + ";\n"
 
@@ -236,6 +236,46 @@ def main():
 
 def generate_demo_states():
     return [
+        {
+            "state": "NJ", "bill": "S 2310", "title": "Temporary workers' bill of rights expansion",
+            "patron": "Sen. Cruz", "category": "Labor", "status": "In progress",
+            "effectiveDate": "2027-01-01", "industries": ["all"],
+            "summary": "Expands scheduling, pay transparency, and equal-pay protections for temporary and staffing-agency workers. (SAMPLE DATA)",
+            "impact": "Staffing-agency arrangements would need new documentation and pay parity review.",
+            "urgency": "high", "breaking": True, "demo": True,
+        },
+        {
+            "state": "NJ", "bill": "A 1780", "title": "Liquor license availability reform for restaurants",
+            "patron": "Asm. Patel", "category": "Legal", "status": "In progress",
+            "effectiveDate": "2027-01-01", "industries": ["restaurants", "hospitality"],
+            "summary": "Phases in new restaurant liquor licenses by municipality and creates a transfer credit for existing license holders. (SAMPLE DATA)",
+            "impact": "Could finally make licenses attainable for independents — and change resale values for current holders.",
+            "urgency": "high", "demo": True,
+        },
+        {
+            "state": "NJ", "bill": "S 1450", "title": "AI hiring tools: bias audit requirement",
+            "patron": "Sen. Okafor", "category": "Legal", "status": "In progress",
+            "effectiveDate": "2027-06-01", "industries": ["all"],
+            "summary": "Requires annual independent bias audits and candidate notice for automated hiring decision tools. (SAMPLE DATA)",
+            "impact": "If you use AI screening software, your vendor's compliance becomes your problem.",
+            "urgency": "medium", "demo": True,
+        },
+        {
+            "state": "NJ", "bill": "A 2004", "title": "Minimum wage annual indexing adjustment",
+            "patron": "Asm. Rivera", "category": "Labor", "status": "In progress",
+            "effectiveDate": "2027-01-01", "industries": ["all"],
+            "summary": "Adjusts the formula for annual CPI-based minimum wage increases and tipped-wage credit. (SAMPLE DATA)",
+            "impact": "Changes how fast the wage floor moves each January.",
+            "urgency": "medium", "demo": True,
+        },
+        {
+            "state": "NJ", "bill": "A 3110", "title": "Childcare facility grants and ratio flexibility",
+            "patron": "Asm. Chen", "category": "Health & Safety", "status": "In progress",
+            "effectiveDate": "2027-01-01", "industries": ["childcare"],
+            "summary": "Creates facility improvement grants and pilot flexibility on staff ratios for high-rated providers. (SAMPLE DATA)",
+            "impact": "Grant money plus operating flexibility for quality-rated centers.",
+            "urgency": "medium", "demo": True,
+        },
         {
             "state": "MD", "bill": "HB 220", "title": "Service fee disclosure on restaurant checks",
             "patron": "Del. Carter", "category": "Legal", "status": "In progress",
