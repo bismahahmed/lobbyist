@@ -100,7 +100,26 @@
       justify-content: center;
       font-size: 17px;
       color: white;
-      box-shadow: 0 6px 16px rgba(244, 89, 59, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 16px rgba(244, 89, 59, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: '';
+      position: absolute;
+      top: -60%;
+      left: -80%;
+      width: 60%;
+      height: 220%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+      transform: rotate(20deg);
+      animation: sheen 5s ease-in-out infinite;
+    }
+
+    @keyframes sheen {
+      0%, 72% { left: -80%; }
+      88%, 100% { left: 150%; }
     }
 
     .brand .iq {
@@ -195,10 +214,17 @@
     }
 
     .hero h1 .grad {
-      background: var(--grad);
+      background: linear-gradient(110deg, #FFB648, #FF6B6B 30%, #C94FE0 55%, #FF6B6B 80%, #FFB648);
+      background-size: 250% 100%;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      animation: shimmer 7s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
     .hero p {
@@ -319,9 +345,9 @@
     .btn-hot, .btn-grad {
       background: var(--grad);
       color: white;
-      box-shadow: 0 6px 18px rgba(244, 89, 59, 0.32);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 6px 18px rgba(244, 89, 59, 0.32);
     }
-    .btn-hot:hover, .btn-grad:hover { box-shadow: 0 8px 26px rgba(244, 89, 59, 0.45); transform: translateY(-1px); }
+    .btn-hot:hover, .btn-grad:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 8px 26px rgba(244, 89, 59, 0.45); transform: translateY(-1px); }
 
     .btn-ghost {
       background: var(--card);
@@ -837,15 +863,38 @@
     .community-icon.c2 { background: var(--lav-soft); color: var(--lav); }
     .community-icon.c3 { background: var(--mint-soft); color: var(--mint); }
 
-    /* TRUST STRIP */
+    /* TRUST STRIP — dark band */
     .trust-strip {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      padding: 1.2rem 1.5rem;
+      background: linear-gradient(160deg, #161B30 0%, #1B2140 55%, #211E3E 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(22, 27, 48, 0.35);
+      padding: 1.7rem 1.8rem 1.4rem;
       margin-bottom: 2.2rem;
       animation: rise 0.5s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .trust-strip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(420px 200px at 85% -20%, rgba(255, 107, 107, 0.18), transparent 65%),
+        radial-gradient(420px 220px at 8% 120%, rgba(155, 93, 229, 0.16), transparent 65%);
+      pointer-events: none;
+    }
+
+    .trust-kicker {
+      text-align: center;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #7C86A6;
+      margin-bottom: 1.1rem;
+      position: relative;
     }
 
     .trust-stats {
@@ -853,6 +902,7 @@
       gap: 0;
       flex-wrap: wrap;
       align-items: stretch;
+      position: relative;
     }
 
     .trust-stat {
@@ -860,53 +910,68 @@
       min-width: 150px;
       text-align: center;
       padding: 0.4rem 1rem;
-      border-right: 1px solid var(--line);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .trust-stat:last-child { border-right: none; }
 
     .trust-num {
       font-family: 'Nunito', sans-serif;
-      font-size: 26px;
+      font-size: 30px;
       font-weight: 900;
       letter-spacing: -0.02em;
-      background: var(--grad);
+      background: linear-gradient(135deg, #FFC24B 0%, #FF7A7A 50%, #C77DFF 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       line-height: 1.15;
     }
 
-    .trust-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+    .trust-label { font-size: 12px; font-weight: 600; color: #9AA3BF; }
 
     .trust-sources {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 2.2rem;
       flex-wrap: wrap;
-      border-top: 1px solid var(--line);
-      margin-top: 1rem;
-      padding-top: 1rem;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--ink-faint);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
+      position: relative;
     }
 
-    .source-chip {
+    .source-logo {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: var(--bg);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0.35rem 0.85rem;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--ink-soft);
+      gap: 10px;
+      color: #A9B1C9;
+      opacity: 0.8;
+      transition: opacity 0.2s, color 0.2s, transform 0.2s;
+      text-decoration: none;
+      cursor: pointer;
     }
 
-    .source-chip i { font-size: 11px; }
+    .source-logo:hover { opacity: 1; color: white; transform: translateY(-2px); }
+
+    .source-logo i { font-size: 21px; }
+
+    .source-logo .lockup { display: flex; flex-direction: column; line-height: 1.15; }
+
+    .source-logo .lname {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 13.5px;
+      letter-spacing: 0.02em;
+    }
+
+    .source-logo .lsub {
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6E7894;
+    }
 
     /* HOW IT WORKS */
     .how-grid {
@@ -1320,6 +1385,7 @@
 
       <!-- TRUST STRIP -->
       <div class="trust-strip" id="trustStrip">
+        <div class="trust-kicker">Powered by Virginia's official systems</div>
         <div class="trust-stats">
           <div class="trust-stat">
             <div class="trust-num" id="trustBills">3,646</div>
@@ -1339,11 +1405,22 @@
           </div>
         </div>
         <div class="trust-sources">
-          <span>Built on the same sources the pros use:</span>
-          <span class="source-chip"><i class="fas fa-landmark"></i> Virginia LIS (official)</span>
-          <span class="source-chip"><i class="fab fa-youtube" style="color:#E02F2F;"></i> Senate of Virginia</span>
-          <span class="source-chip"><i class="fas fa-microphone"></i> HODSpeak</span>
-          <span class="source-chip"><i class="fas fa-magnifying-glass-chart"></i> VPAP</span>
+          <a class="source-logo" href="https://lis.virginia.gov" target="_blank" rel="noopener">
+            <i class="fas fa-landmark-dome"></i>
+            <span class="lockup"><span class="lname">Virginia LIS</span><span class="lsub">Official bill data</span></span>
+          </a>
+          <a class="source-logo" href="https://www.youtube.com/@SenateofVirginia" target="_blank" rel="noopener">
+            <i class="fab fa-youtube"></i>
+            <span class="lockup"><span class="lname">Senate of Virginia</span><span class="lsub">Live hearings</span></span>
+          </a>
+          <a class="source-logo" href="https://hodspeak.house.virginia.gov/" target="_blank" rel="noopener">
+            <i class="fas fa-microphone-lines"></i>
+            <span class="lockup"><span class="lname">HODSpeak</span><span class="lsub">Speaker signup</span></span>
+          </a>
+          <a class="source-logo" href="https://www.vpap.org" target="_blank" rel="noopener">
+            <i class="fas fa-chart-column"></i>
+            <span class="lockup"><span class="lname">VPAP</span><span class="lsub">Money & elections</span></span>
+          </a>
         </div>
       </div>
 
