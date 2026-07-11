@@ -564,6 +564,97 @@
     .pill-watch { background: rgba(255, 176, 32, 0.12); color: var(--amber); border: 1px solid rgba(255, 176, 32, 0.3); }
     .pill-track { background: rgba(79, 124, 255, 0.12); color: #7B9CFF; border: 1px solid rgba(79, 124, 255, 0.3); }
     .pill-done { background: rgba(46, 213, 115, 0.12); color: var(--green); border: 1px solid rgba(46, 213, 115, 0.3); }
+    .pill-dead { background: rgba(152, 162, 184, 0.1); color: var(--text-dim); border: 1px solid rgba(152, 162, 184, 0.25); }
+
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text-dim);
+      background: rgba(46, 213, 115, 0.06);
+      border: 1px solid rgba(46, 213, 115, 0.25);
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem;
+    }
+
+    .sync-badge .pulse-dot { width: 7px; height: 7px; }
+    .sync-badge a { color: var(--green); text-decoration: none; }
+    .sync-badge a:hover { text-decoration: underline; }
+    .sync-badge.demo-badge { background: rgba(255, 176, 32, 0.06); border-color: rgba(255, 176, 32, 0.3); }
+    .sync-badge.demo-badge .pulse-dot { background: var(--amber); animation: none; }
+
+    .step-list { counter-reset: step; margin: 0.5rem 0 1rem; }
+
+    .step-item {
+      display: flex;
+      gap: 14px;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-item:last-child { border-bottom: none; }
+
+    .step-num {
+      counter-increment: step;
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--grad);
+      color: white;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-body { flex: 1; font-size: 13.5px; color: var(--text-dim); }
+    .step-body b { color: var(--text); display: block; margin-bottom: 0.2rem; font-size: 14px; }
+    .step-body a { color: #7B9CFF; text-decoration: none; }
+    .step-body a:hover { text-decoration: underline; }
+
+    .seg-row { display: flex; gap: 8px; margin-bottom: 1.25rem; }
+
+    .seg {
+      flex: 1;
+      text-align: center;
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-bright);
+      background: var(--surface);
+      color: var(--text-dim);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .seg.active {
+      background: var(--grad);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 2px 12px rgba(111, 116, 255, 0.4);
+    }
+
+    .script-output {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.8;
+      color: var(--text);
+      white-space: pre-wrap;
+      margin-bottom: 1rem;
+      max-height: 320px;
+      overflow-y: auto;
+    }
 
     .bill-summary { font-size: 13.5px; color: var(--text-dim); margin-bottom: 1rem; max-width: 760px; }
 
@@ -917,6 +1008,7 @@
             <option value="hospitality">Hospitality</option>
           </select>
         </div>
+        <div id="syncBadge"></div>
       </div>
 
       <!-- BREAKING -->
@@ -1046,6 +1138,157 @@
     </div>
   </div>
 
+  <!-- TESTIFY MODAL -->
+  <div id="testifyModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-microphone" style="color: #7B9CFF; margin-right: 8px;"></i>Testify — without leaving your kitchen</h2>
+        <button class="modal-close" onclick="closeTestify()"><i class="fas fa-xmark"></i></button>
+      </div>
+
+      <p style="font-size: 13.5px; color: var(--text-dim); margin-bottom: 1.2rem;">
+        Since 2020, Virginia lets anyone sign up to speak to a committee remotely — by video or phone.
+        Almost nobody outside Richmond knows this. Here's the whole process, minus the confusion, for
+        <b style="color: var(--text);" id="testifyBillLabel"></b>.
+      </p>
+
+      <div class="seg-row">
+        <div class="seg active" id="segHouse" onclick="setChamber('house')">House bill (HB)</div>
+        <div class="seg" id="segSenate" onclick="setChamber('senate')">Senate bill (SB)</div>
+      </div>
+
+      <div id="testifySteps"></div>
+
+      <div class="section-title" style="margin-top: 1.5rem; font-size: 15px;">Build your testimony script</div>
+      <p style="font-size: 12.5px; color: var(--text-dim); margin-bottom: 1rem;">
+        Fill in four things and get a ready-to-read script — 30, 60, or 90 seconds. Committees respect people who are brief, personal, and specific.
+      </p>
+
+      <div class="form-group">
+        <label>Your name & city</label>
+        <input type="text" id="tName" placeholder="Maria Lopez, Arlington" />
+      </div>
+      <div class="form-group">
+        <label>Your business / organization & what it is</label>
+        <input type="text" id="tBusiness" placeholder="Tres Tacos, a 20-person family restaurant" />
+      </div>
+      <div class="form-group">
+        <label>Your position</label>
+        <div class="seg-row" style="margin-bottom: 0;">
+          <div class="seg active" id="segSupport" onclick="setPosition('support')">Support</div>
+          <div class="seg" id="segOppose" onclick="setPosition('oppose')">Oppose</div>
+          <div class="seg" id="segAmend" onclick="setPosition('amend')">Support with changes</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>How this bill hits you, in your own words (one or two sentences)</label>
+        <textarea id="tStake" style="min-height: 70px;" placeholder="This would add about $60,000 a year to my labor costs. I'd have to cut two positions or raise menu prices 15%."></textarea>
+      </div>
+
+      <div class="seg-row">
+        <div class="seg" id="seg30" onclick="setLength(30)">30 sec</div>
+        <div class="seg active" id="seg60" onclick="setLength(60)">60 sec</div>
+        <div class="seg" id="seg90" onclick="setLength(90)">90 sec</div>
+      </div>
+
+      <button class="btn btn-grad" onclick="buildScript()" style="width: 100%; margin-bottom: 1rem;"><i class="fas fa-wand-magic-sparkles"></i> Generate my script</button>
+
+      <div id="scriptResult" style="display: none;">
+        <div class="script-output" id="scriptText"></div>
+        <div class="modal-actions" style="margin-top: 0;">
+          <button class="btn btn-grad" onclick="copyScript()"><i class="fas fa-copy"></i> Copy script</button>
+          <button class="btn btn-ghost" onclick="downloadScript()"><i class="fas fa-download"></i> Download as text file</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLIP & SHARE MODAL -->
+  <div id="clipModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-clapperboard" style="color: #7B9CFF; margin-right: 8px;"></i>Clip & share your testimony</h2>
+        <button class="modal-close" onclick="closeClip()"><i class="fas fa-xmark"></i></button>
+      </div>
+
+      <p style="font-size: 13.5px; color: var(--text-dim); margin-bottom: 1.2rem;">
+        Every committee hearing is recorded and public record. You spoke up — now make it travel.
+        Find your moment, clip it, and post it with a caption that's already written for you.
+      </p>
+
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <b>Find your hearing video</b>
+            House committee streams are archived on the
+            <a href="https://virginiageneralassembly.gov/membersAndSession.php?secid=1&activesec=0#!hb=1&mainContentTabs=4" target="_blank" rel="noopener">House video archive</a> (hosted on YouTube) ·
+            Senate hearings live in the
+            <a href="https://virginia-senate.granicus.com/ViewPublisher.php?view_id=3" target="_blank" rel="noopener">Senate video archive</a>.
+            Search by committee name and meeting date.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <b>Mark your moment</b>
+            Scrub to where the chair calls your name. Note your start and end time below — most testimony runs 1–3 minutes.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <b>Clip it</b>
+            On YouTube videos: hit <b style="display:inline;">Share → Clip</b> to cut up to 60 seconds with zero editing skills. For longer moments or Senate videos: screen-record the segment (Mac: Cmd+Shift+5 · iPhone: Control Center → Screen Recording). It's public record — you're allowed.
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <b>Post it with a caption below</b>
+            Tag your legislators. Decision-makers absolutely see this.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Video link (optional — for a timestamped share link)</label>
+        <input type="text" id="clipUrl" placeholder="Paste the YouTube archive link" />
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="form-group">
+          <label>Your moment starts at</label>
+          <input type="text" id="clipStart" placeholder="1:42:30" />
+        </div>
+        <div class="form-group">
+          <label>Ends at</label>
+          <input type="text" id="clipEnd" placeholder="1:44:10" />
+        </div>
+      </div>
+
+      <button class="btn btn-grad" onclick="buildClipKit()" style="width: 100%; margin-bottom: 1rem;"><i class="fas fa-wand-magic-sparkles"></i> Generate my share kit</button>
+
+      <div id="clipResult" style="display: none;">
+        <div id="clipLinkRow" style="display: none;" class="template-box">
+          <div class="template-label">Timestamped link — starts right at your moment</div>
+          <div class="template-text" id="clipLink"></div>
+        </div>
+        <div class="template-box">
+          <div class="template-label">LinkedIn caption <button class="btn btn-ghost" style="float: right; padding: 0.2rem 0.6rem; font-size: 11px;" onclick="copyCaption('capLinkedin')">Copy</button></div>
+          <div class="template-text" id="capLinkedin"></div>
+        </div>
+        <div class="template-box">
+          <div class="template-label">X / Threads caption <button class="btn btn-ghost" style="float: right; padding: 0.2rem 0.6rem; font-size: 11px;" onclick="copyCaption('capX')">Copy</button></div>
+          <div class="template-text" id="capX"></div>
+        </div>
+        <div class="template-box">
+          <div class="template-label">Instagram / TikTok caption <button class="btn btn-ghost" style="float: right; padding: 0.2rem 0.6rem; font-size: 11px;" onclick="copyCaption('capIg')">Copy</button></div>
+          <div class="template-text" id="capIg"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="bills-data.js"></script>
   <script>
     let selectedIndustry = '';
@@ -1104,7 +1347,27 @@
       renderOverview();
       renderActionPlan();
       renderFilters();
+      renderSyncBadge();
       document.getElementById('navSession').textContent = `Live · ${STATES[selectedState]} 2026`;
+    }
+
+    function renderSyncBadge() {
+      const el = document.getElementById('syncBadge');
+      if (selectedState === 'VA' && typeof VA_SESSION !== 'undefined') {
+        el.innerHTML = `
+          <div class="sync-badge">
+            <span class="pulse-dot"></span>
+            Synced with <a href="https://lis.virginia.gov" target="_blank" rel="noopener">lis.virginia.gov</a>
+            · ${VA_SESSION.name} · ${VA_SESSION.totalBills.toLocaleString()} bills scanned
+            · ${VA_SESSION.matched} relevant to your industries · updated ${VA_SESSION.updated}
+          </div>`;
+      } else {
+        el.innerHTML = `
+          <div class="sync-badge demo-badge">
+            <span class="pulse-dot"></span>
+            ${STATES[selectedState]} data is illustrative demo data — real feed coming after Virginia
+          </div>`;
+      }
     }
 
     function getRelevantBills() {
@@ -1116,10 +1379,14 @@
     }
 
     function renderTicker() {
-      const items = BILLS.map(b => {
+      const pool = BILLS.filter(b => b.state === selectedState).slice(0, 24)
+        .concat(BILLS.filter(b => b.state !== selectedState).slice(0, 6));
+      const items = pool.map(b => {
         const dir = b.status === 'Enacted'
           ? `<span class="tick-ok">● ENACTED</span>`
-          : (b.urgency === 'high' ? `<span class="tick-up">▲ MOVING</span>` : `<span style="color:#FFB020">◆ ${b.status.toUpperCase()}</span>`);
+          : (b.status === 'Defeated' || b.status === 'Vetoed'
+            ? `<span style="color:#98A2B8">■ ${b.status.toUpperCase()}</span>`
+            : (b.urgency === 'high' ? `<span class="tick-up">▲ MOVING</span>` : `<span style="color:#FFB020">◆ ${b.status.toUpperCase()}</span>`));
         return `<span class="ticker-item"><b>${b.state} ${b.bill}</b> ${dir} — ${b.title}</span>`;
       });
       document.getElementById('tickerTrack').innerHTML = items.concat(items).join('');
@@ -1127,26 +1394,27 @@
 
     function renderMetrics() {
       const bills = getRelevantBills();
-      const actionNeeded = bills.filter(b => b.urgency === 'high').length;
-      const costImpact = actionNeeded * 50000;
-      const deadlines = bills.filter(b => b.daysToVote && b.daysToVote < 30).length;
+      const today = new Date().toISOString().slice(0, 10);
+      const enacted = bills.filter(b => b.status === 'Enacted');
+      const nowLaw = enacted.filter(b => b.effectiveDate && b.effectiveDate <= today).length;
+      const comingBack = bills.filter(b => b.status === 'Carried over' || b.status === 'In progress' || b.status === 'Passed — awaiting Governor').length;
       const allies = 20 + (selectedState.charCodeAt(0) + selectedState.charCodeAt(1)) % 40;
 
       document.getElementById('metricsContainer').innerHTML = `
         <div class="metric">
           <div class="metric-label">Bills tracking you</div>
           <div class="metric-value">${bills.length}</div>
-          <div class="metric-sub ${actionNeeded ? 'alert' : ''}">${actionNeeded} need action</div>
+          <div class="metric-sub ${enacted.length ? 'alert' : ''}">${enacted.length} became law</div>
         </div>
         <div class="metric">
-          <div class="metric-label">Deadlines · 30 days</div>
-          <div class="metric-value">${deadlines}</div>
-          <div class="metric-sub">Next: ${nextDeadline(bills)}</div>
+          <div class="metric-label">Now in effect</div>
+          <div class="metric-value">${nowLaw}</div>
+          <div class="metric-sub">${nextEffective(enacted, today)}</div>
         </div>
         <div class="metric">
-          <div class="metric-label">Exposure · year 1</div>
-          <div class="metric-value">$${(costImpact / 1000).toFixed(0)}K</div>
-          <div class="metric-sub">If everything passes</div>
+          <div class="metric-label">Coming back</div>
+          <div class="metric-value">${comingBack}</div>
+          <div class="metric-sub">Carried over / still moving</div>
         </div>
         <div class="metric">
           <div class="metric-label">Allies mobilized</div>
@@ -1156,9 +1424,12 @@
       `;
     }
 
-    function nextDeadline(bills) {
-      const withVotes = bills.filter(b => b.daysToVote).sort((a, b) => a.daysToVote - b.daysToVote);
-      return withVotes.length ? `${withVotes[0].daysToVote} days (${withVotes[0].bill})` : '—';
+    function nextEffective(enacted, today) {
+      const upcoming = enacted.filter(b => b.effectiveDate && b.effectiveDate > today)
+        .sort((a, b) => a.effectiveDate.localeCompare(b.effectiveDate));
+      return upcoming.length
+        ? `Next wave: ${fmtDate(upcoming[0].effectiveDate)}`
+        : 'Compliance clock is running';
     }
 
     function renderBreakingAlert() {
@@ -1166,29 +1437,75 @@
       const alert = document.getElementById('breakingAlert');
       if (!breaking) { alert.style.display = 'none'; return; }
 
-      const daysStr = breaking.daysToVote === 1 ? '1 day' : `${breaking.daysToVote} days`;
-      document.getElementById('breakingTitle').textContent = breaking.title;
-      document.getElementById('breakingTime').textContent = '2H AGO';
-      document.getElementById('breakingBody').innerHTML =
-        `This bill just moved to floor vote. <b>Vote scheduled in ${daysStr}</b> — the window to contact your delegates is closing.`;
-      document.getElementById('breakingMeta').innerHTML = `
-        <span><i class="fas fa-file-lines"></i> ${breaking.bill}</span>
-        <span><i class="fas fa-crosshairs"></i> Impact score ${iqScore(breaking)}/100</span>
-        <span><i class="fas fa-hourglass-half"></i> ${daysStr} to act</span>
-      `;
-      document.getElementById('breakingAction').onclick = () => openContactModal(breaking.bill);
-      document.getElementById('breakingDetails').onclick = () => viewDetails(breaking.bill);
+      let headline = breaking.title;
+      if (headline.length < 30 && breaking.summary) {
+        const full = breaking.summary.replace(/\.$/, '');
+        headline = full.length <= 95 ? full : full.slice(0, 92) + '…';
+      }
+      document.getElementById('breakingTitle').textContent = headline;
+
+      if (breaking.status === 'Enacted') {
+        const chap = breaking.chapter ? 'Chapter ' + parseInt(breaking.chapter.replace(/\D/g, ''), 10) : 'signed';
+        document.getElementById('breakingTime').textContent = 'NOW LAW';
+        document.getElementById('breakingBody').innerHTML =
+          `Signed into law as <b>${chap}</b>. Effective <b>${fmtDate(breaking.effectiveDate)}${breaking.effectiveEstimated ? ' (est.)' : ''}</b> — the compliance clock is already running for your business.`;
+        document.getElementById('breakingMeta').innerHTML = `
+          <span><i class="fas fa-file-lines"></i> ${breaking.bill}</span>
+          <span><i class="fas fa-crosshairs"></i> Impact score ${iqScore(breaking)}/100</span>
+          <span><i class="fas fa-gavel"></i> ${chap}</span>
+        `;
+        document.getElementById('breakingAction').innerHTML = '<i class="fas fa-bolt"></i> What this means for you';
+        document.getElementById('breakingAction').onclick = () => viewDetails(breaking.bill);
+        document.getElementById('breakingDetails').textContent = 'Read the law on LIS';
+        document.getElementById('breakingDetails').onclick = () => window.open(breaking.lisLink, '_blank');
+      } else {
+        const daysStr = breaking.daysToVote ? (breaking.daysToVote === 1 ? '1 day' : `${breaking.daysToVote} days`) : 'soon';
+        document.getElementById('breakingTime').textContent = '2H AGO';
+        document.getElementById('breakingBody').innerHTML =
+          `This bill just moved. <b>Vote expected in ${daysStr}</b> — the window to contact your delegates is closing.`;
+        document.getElementById('breakingMeta').innerHTML = `
+          <span><i class="fas fa-file-lines"></i> ${breaking.bill}</span>
+          <span><i class="fas fa-crosshairs"></i> Impact score ${iqScore(breaking)}/100</span>
+          <span><i class="fas fa-hourglass-half"></i> ${daysStr} to act</span>
+        `;
+        document.getElementById('breakingAction').innerHTML = '<i class="fas fa-bolt"></i> Take action now';
+        document.getElementById('breakingAction').onclick = () => openContactModal(breaking.bill);
+        document.getElementById('breakingDetails').textContent = 'Full intel';
+        document.getElementById('breakingDetails').onclick = () => viewDetails(breaking.bill);
+      }
       alert.style.display = 'block';
     }
 
-    function billCard(bill, delay) {
-      let pillClass = 'pill-track', pillIcon = 'fa-satellite-dish', pillText = 'Tracking';
-      if (bill.breaking) { pillClass = 'pill-act'; pillIcon = 'fa-bolt'; pillText = 'Act now'; }
-      else if (bill.urgency === 'high') { pillClass = 'pill-act'; pillIcon = 'fa-triangle-exclamation'; pillText = 'Action needed'; }
-      else if (bill.status === 'Enacted') { pillClass = 'pill-done'; pillIcon = 'fa-check'; pillText = 'Enacted'; }
-      else if (bill.urgency === 'medium') { pillClass = 'pill-watch'; pillIcon = 'fa-eye'; pillText = 'Watch'; }
+    function pillFor(bill) {
+      if (bill.breaking) return ['pill-act', 'fa-bolt', 'Spotlight'];
+      switch (bill.status) {
+        case 'Enacted': return ['pill-done', 'fa-check', bill.chapter ? 'Enacted · Ch. ' + parseInt(bill.chapter.replace(/\D/g, ''), 10) : 'Enacted'];
+        case 'Passed — awaiting Governor': return ['pill-track', 'fa-hourglass-half', 'On Governor’s desk'];
+        case 'Carried over': return ['pill-watch', 'fa-rotate-right', 'Returns next session'];
+        case 'Vetoed': return ['pill-dead', 'fa-ban', 'Vetoed'];
+        case 'Defeated': return ['pill-dead', 'fa-xmark', 'Defeated'];
+        default:
+          if (bill.urgency === 'high') return ['pill-act', 'fa-triangle-exclamation', 'Action needed'];
+          if (bill.urgency === 'medium') return ['pill-watch', 'fa-eye', 'Watch'];
+          return ['pill-track', 'fa-satellite-dish', 'Tracking'];
+      }
+    }
 
+    function fmtDate(iso) {
+      if (!iso) return 'TBD';
+      const [y, m, d] = iso.split('-').map(Number);
+      return new Date(y, m - 1, d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function billCard(bill, delay) {
+      const [pillClass, pillIcon, pillText] = pillFor(bill);
       const score = iqScore(bill);
+      const effLabel = bill.effectiveDate
+        ? fmtDate(bill.effectiveDate) + (bill.effectiveEstimated ? ' (est.)' : '')
+        : (bill.status === 'Defeated' || bill.status === 'Vetoed' ? 'Never — it’s dead' : 'Pending');
+      const lisBtn = bill.lisLink
+        ? `<a class="btn btn-ghost" href="${bill.lisLink}" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> View on LIS</a>`
+        : `<button class="btn btn-ghost" onclick="viewDetails('${bill.bill}')">Details</button>`;
       return `
         <div class="bill-card" style="animation-delay: ${delay * 0.05}s">
           <div class="bill-top">
@@ -1197,7 +1514,8 @@
               <div class="bill-meta">
                 <span><i class="fas fa-file-lines"></i>${bill.state} · ${bill.bill}</span>
                 <span><i class="fas fa-user"></i>${bill.patron}</span>
-                <span><i class="fas fa-calendar"></i>${bill.effectiveDate || 'TBD'}</span>
+                <span><i class="fas fa-calendar"></i>${effLabel}</span>
+                ${bill.demo ? '<span style="color: var(--amber);"><i class="fas fa-flask"></i>DEMO</span>' : ''}
               </div>
             </div>
             <div class="bill-right">
@@ -1211,17 +1529,19 @@
           <div class="bill-summary">${bill.summary}</div>
           <div class="impact-grid">
             <div class="impact-item">
-              <div class="impact-label">Your exposure</div>
+              <div class="impact-label">What it means for you</div>
               <div class="impact-value">${bill.impact}</div>
             </div>
             <div class="impact-item">
-              <div class="impact-label">When it hits</div>
-              <div class="impact-value">${bill.effectiveDate || 'Pending'}</div>
+              <div class="impact-label">${bill.status === 'Enacted' ? 'In effect' : 'When it would hit'}</div>
+              <div class="impact-value">${effLabel}</div>
             </div>
           </div>
           <div class="bill-actions">
-            <button class="btn btn-grad" onclick="openContactModal('${bill.bill}')"><i class="fas fa-paper-plane"></i> Contact delegates</button>
-            <button class="btn btn-ghost" onclick="viewDetails('${bill.bill}')">Details</button>
+            <button class="btn btn-grad" onclick="openTestifyModal('${bill.bill}')"><i class="fas fa-microphone"></i> Testify</button>
+            <button class="btn btn-ghost" onclick="openContactModal('${bill.bill}')"><i class="fas fa-paper-plane"></i> Contact delegates</button>
+            <button class="btn btn-ghost" onclick="openClipModal('${bill.bill}')"><i class="fas fa-clapperboard"></i> Clip & share</button>
+            ${lisBtn}
           </div>
         </div>
       `;
@@ -1229,9 +1549,14 @@
 
     function renderBills() {
       const bills = getRelevantBills();
-      document.getElementById('billsList').innerHTML =
-        bills.map((b, i) => billCard(b, i)).join('') ||
+      const CAP = 60;
+      const shown = bills.slice(0, CAP);
+      let html = shown.map((b, i) => billCard(b, Math.min(i, 12))).join('') ||
         '<p style="color: var(--text-dim); font-size: 14px;">No bills match your selection.</p>';
+      if (bills.length > CAP) {
+        html += `<p style="color: var(--text-dim); font-size: 13px; font-family: 'JetBrains Mono', monospace; text-align: center; padding: 0.5rem 0;">Showing ${CAP} of ${bills.length} bills — use the industry filters to narrow down.</p>`;
+      }
+      document.getElementById('billsList').innerHTML = html;
     }
 
     function renderOverview() {
@@ -1261,52 +1586,69 @@
     }
 
     function renderActionPlan() {
+      const bills = getRelevantBills();
       const breaking = BILLS.find(b => b.breaking && b.state === selectedState);
-      if (!breaking) {
-        const urgent = getRelevantBills().filter(b => b.daysToVote).sort((a, b) => a.daysToVote - b.daysToVote)[0];
-        document.getElementById('actionTimeline').innerHTML = urgent
-          ? `<p style="color: var(--text-dim); font-size: 14px;">No breaking alerts in ${STATES[selectedState]} right now. Next deadline: <b style="color: var(--text)">${urgent.bill}</b> (${urgent.title}) — vote expected in ${urgent.daysToVote} days.</p>`
-          : `<p style="color: var(--text-dim); font-size: 14px;">No urgent action items in ${STATES[selectedState]}. You're all caught up.</p>`;
+      const comingBack = bills.filter(b => b.status === 'Carried over');
+      const focus = breaking || bills[0];
+      if (!focus) {
+        document.getElementById('actionTimeline').innerHTML =
+          `<p style="color: var(--text-dim); font-size: 14px;">No action items in ${STATES[selectedState]}. You're all caught up.</p>`;
         return;
       }
 
-      document.getElementById('actionTimeline').innerHTML = `
+      const enactedPlan = `
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div style="flex: 1;">
+            <div class="timeline-label">This week</div>
+            <div class="timeline-text">Get compliant with what just became law</div>
+            <div class="timeline-desc">${focus.bill} (${focus.title}) is now law${focus.effectiveDate ? ', effective ' + fmtDate(focus.effectiveDate) + (focus.effectiveEstimated ? ' (est.)' : '') : ''}. Read what changed and adjust before enforcement catches up.</div>
+            <a class="btn btn-grad" href="${focus.lisLink || '#'}" target="_blank" rel="noopener"><i class="fas fa-scale-balanced"></i> Read the law</a>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div style="flex: 1;">
+            <div class="timeline-label">This summer & fall</div>
+            <div class="timeline-text">Get on record before the next session</div>
+            <div class="timeline-desc">${comingBack.length ? comingBack.length + ' of your bills were carried over and come back in 2027.' : 'Interim studies and commissions are meeting now.'} This is when minds are actually open — testimony now beats testimony in the January crush.</div>
+            <button class="btn btn-grad" onclick="openTestifyModal('${(comingBack[0] || focus).bill}')"><i class="fas fa-microphone"></i> Learn to testify (it's easier than you think)</button>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div style="flex: 1;">
+            <div class="timeline-label">After you testify</div>
+            <div class="timeline-text">Turn your testimony into content</div>
+            <div class="timeline-desc">Every hearing is recorded and public. Clip your moment, post it, and show your customers and community that you fight for them.</div>
+            <button class="btn btn-ghost" onclick="openClipModal('${(comingBack[0] || focus).bill}')"><i class="fas fa-clapperboard"></i> Clip & share studio</button>
+          </div>
+        </div>
+      `;
+
+      const liveplan = `
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div style="flex: 1;">
             <div class="timeline-label">Today</div>
-            <div class="timeline-text">Email your delegates about ${breaking.bill}</div>
+            <div class="timeline-text">Email your delegates about ${focus.bill}</div>
             <div class="timeline-desc">Takes ~2 minutes. Use the template or make it yours — personal beats perfect.</div>
-            <div class="template-box">
-              <div class="template-label">Quick template</div>
-              <div class="template-text">"I own a business in [city]. ${breaking.bill} will cost us real money. Please vote No or push for a phase-in."</div>
-            </div>
-            <button class="btn btn-grad" onclick="openContactModal('${breaking.bill}')"><i class="fas fa-paper-plane"></i> Contact delegates now</button>
+            <button class="btn btn-grad" onclick="openContactModal('${focus.bill}')"><i class="fas fa-paper-plane"></i> Contact delegates now</button>
           </div>
         </div>
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div style="flex: 1;">
-            <div class="timeline-label">Tomorrow</div>
-            <div class="timeline-text">Join the coordinated call</div>
-            <div class="timeline-desc">6pm — align talking points with other businesses before the vote.</div>
-            <button class="btn btn-ghost" onclick="alert('Sign-up coming soon!')"><i class="fas fa-video"></i> Join call</button>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div style="flex: 1;">
-            <div class="timeline-label">Vote day · ${breaking.daysToVote} days out</div>
-            <div class="timeline-text">Last-minute phone calls</div>
-            <div class="timeline-desc">A call beats an email on vote day. 30 seconds, from the script.</div>
-            <div class="template-box">
-              <div class="template-label">Phone script · 30 sec</div>
-              <div class="template-text">"Hi, I own a business in [city]. I'm urging the ${breaking.bill.startsWith('S') ? 'Senator' : 'Delegate'} to vote No on ${breaking.bill}. This hits small businesses like mine hard. Please vote No."</div>
-            </div>
-            <button class="btn btn-hot" onclick="openContactModal('${breaking.bill}')"><i class="fas fa-phone"></i> Get delegate numbers</button>
+            <div class="timeline-label">Before the vote</div>
+            <div class="timeline-text">Sign up to testify — from your kitchen table</div>
+            <div class="timeline-desc">Virginia lets you speak to committees remotely. Two minutes of your real story beats a hundred form letters.</div>
+            <button class="btn btn-hot" onclick="openTestifyModal('${focus.bill}')"><i class="fas fa-microphone"></i> Testify on this bill</button>
           </div>
         </div>
       `;
+
+      document.getElementById('actionTimeline').innerHTML =
+        (focus.status === 'Enacted') ? enactedPlan : liveplan;
     }
 
     function switchTab(tabName, evt) {
@@ -1403,6 +1745,222 @@ Thank you for your service,
     function copyMessage() {
       navigator.clipboard.writeText(document.getElementById('messageTemplate').value);
       alert('Message copied! Paste it into your email or share it with your group.');
+    }
+
+    // ============ TESTIFY ============
+    let testifyBill = null;
+    let tChamber = 'house';
+    let tPosition = 'support';
+    let tLength = 60;
+
+    function openTestifyModal(billId) {
+      testifyBill = BILLS.find(b => b.bill === billId) || getRelevantBills()[0];
+      document.getElementById('testifyBillLabel').textContent = `${testifyBill.bill} — ${testifyBill.title}`;
+      setChamber(testifyBill.bill.trim().startsWith('S') ? 'senate' : 'house');
+      document.getElementById('scriptResult').style.display = 'none';
+      document.getElementById('testifyModal').classList.add('active');
+    }
+
+    function closeTestify() { document.getElementById('testifyModal').classList.remove('active'); }
+
+    function setChamber(c) {
+      tChamber = c;
+      document.getElementById('segHouse').classList.toggle('active', c === 'house');
+      document.getElementById('segSenate').classList.toggle('active', c === 'senate');
+      renderTestifySteps();
+    }
+
+    function setPosition(p) {
+      tPosition = p;
+      document.getElementById('segSupport').classList.toggle('active', p === 'support');
+      document.getElementById('segOppose').classList.toggle('active', p === 'oppose');
+      document.getElementById('segAmend').classList.toggle('active', p === 'amend');
+    }
+
+    function setLength(l) {
+      tLength = l;
+      [30, 60, 90].forEach(n => document.getElementById('seg' + n).classList.toggle('active', n === l));
+    }
+
+    function renderTestifySteps() {
+      const houseSteps = `
+        <div class="step-list">
+          <div class="step-item"><div class="step-num">1</div><div class="step-body">
+            <b>Find the hearing</b>
+            Check the <a href="https://virginiageneralassembly.gov/hs" target="_blank" rel="noopener">House meeting schedule</a> for the committee handling your bill. During session, committees post dockets a few days ahead.
+          </div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-body">
+            <b>Sign up on HODSpeak — the official House signup site</b>
+            Go to <a href="https://hodspeak.house.virginia.gov/" target="_blank" rel="noopener">hodspeak.house.virginia.gov</a>, find the meeting, and click "Sign up to speak or submit comments." Choose to participate <b style="display:inline;">virtually by phone or computer</b>. Deadlines: midnight before a morning meeting, noon for an afternoon one.
+          </div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-body">
+            <b>Get your link & be ready early</b>
+            House Committee Operations emails you joining instructions. Join 15 minutes early, test your mic, and wait to be called. Have your script in front of you.
+          </div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-body">
+            <b>Missed the signup?</b>
+            Submit written comments instead — anything received 4+ hours before the meeting goes in front of every committee member.
+          </div></div>
+        </div>`;
+      const senateSteps = `
+        <div class="step-list">
+          <div class="step-item"><div class="step-num">1</div><div class="step-body">
+            <b>Find the hearing</b>
+            Check the <a href="https://virginiageneralassembly.gov/" target="_blank" rel="noopener">General Assembly schedule</a> for the Senate committee handling your bill.
+          </div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-body">
+            <b>Register to participate remotely</b>
+            The Senate runs its own process: <a href="https://vga.virginia.gov/engage/participation-public-comment/participate-remotely-senate/" target="_blank" rel="noopener">Participate Remotely — Senate</a>. Register for the specific meeting and you'll receive connection details.
+          </div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-body">
+            <b>Be ready early</b>
+            Join ahead of time, test your audio, and have your script ready. Chairs move fast — you may get 2 minutes, so lead with your strongest point.
+          </div></div>
+        </div>`;
+      document.getElementById('testifySteps').innerHTML = tChamber === 'house' ? houseSteps : senateSteps;
+    }
+
+    function buildScript() {
+      const name = document.getElementById('tName').value.trim() || '[Your name, City]';
+      const biz = document.getElementById('tBusiness').value.trim() || '[your business]';
+      const stake = document.getElementById('tStake').value.trim() || '[how this bill affects you, in one or two sentences]';
+      const b = testifyBill;
+      const chairTitle = tChamber === 'house' ? 'Chair and members of the committee' : 'Mr./Madam Chair and members of the committee';
+
+      const posLine = {
+        support: `I'm here to ask you to support ${b.bill}.`,
+        oppose: `I'm here to respectfully ask you to vote no on ${b.bill}.`,
+        amend: `I support the goal of ${b.bill}, but I'm asking for a small change before it moves forward.`
+      }[tPosition];
+
+      const askLine = {
+        support: `Please vote yes on ${b.bill}. It matters to businesses like mine.`,
+        oppose: `Please vote no, or at least give small businesses like mine time to adapt with a phase-in.`,
+        amend: `Please amend the bill to address this before it moves — we want it to work in the real world.`
+      }[tPosition];
+
+      let script = '';
+      if (tLength === 30) {
+        script = `Good morning, ${chairTitle}. My name is ${name}, and I own ${biz}.
+
+${posLine} ${stake}
+
+${askLine} Thank you.`;
+      } else if (tLength === 60) {
+        script = `Good morning, ${chairTitle}. My name is ${name}, and I own ${biz}.
+
+${posLine}
+
+This bill — ${b.title} — affects my business directly. ${stake}
+
+I'm not a lobbyist. I'm the person who has to live with this law every day, and that's why I took the time to speak to you today.
+
+${askLine} Thank you for your time and your service.`;
+      } else {
+        script = `Good morning, ${chairTitle}. My name is ${name}, and I own ${biz}. Thank you for the chance to speak — this is my first time testifying, and I'm doing it because this bill matters to my livelihood.
+
+${posLine}
+
+As I understand it, this bill — ${b.title} — would change the rules my business operates under. Here's what that looks like from where I stand: ${stake}
+
+I'm not against good policy. I want laws that work — for my employees, my customers, and my community. But the people who write these rules rarely hear from the people who live under them, and that's why I'm here.
+
+${askLine}
+
+Thank you, ${chairTitle}, for your time and your service. I'm happy to answer any questions.`;
+      }
+
+      document.getElementById('scriptText').textContent = script;
+      document.getElementById('scriptResult').style.display = 'block';
+    }
+
+    function copyScript() {
+      navigator.clipboard.writeText(document.getElementById('scriptText').textContent);
+      alert('Script copied. Print it or keep it on screen while you testify.');
+    }
+
+    function downloadScript() {
+      const blob = new Blob([document.getElementById('scriptText').textContent], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `testimony-${(testifyBill.bill || 'bill').replace(/\s/g, '')}.txt`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    // ============ CLIP & SHARE ============
+    let clipBill = null;
+
+    function openClipModal(billId) {
+      clipBill = BILLS.find(b => b.bill === billId) || getRelevantBills()[0];
+      document.getElementById('clipResult').style.display = 'none';
+      document.getElementById('clipModal').classList.add('active');
+    }
+
+    function closeClip() { document.getElementById('clipModal').classList.remove('active'); }
+
+    function parseTimestamp(str) {
+      if (!str) return null;
+      const parts = str.trim().split(':').map(Number);
+      if (parts.some(isNaN)) return null;
+      return parts.reverse().reduce((sec, v, i) => sec + v * Math.pow(60, i), 0);
+    }
+
+    function buildClipKit() {
+      const b = clipBill;
+      const url = document.getElementById('clipUrl').value.trim();
+      const startSec = parseTimestamp(document.getElementById('clipStart').value);
+
+      const linkRow = document.getElementById('clipLinkRow');
+      if (url && startSec !== null) {
+        let stamped = url;
+        try {
+          const u = new URL(url);
+          if (u.hostname.includes('youtu')) {
+            u.searchParams.set('t', startSec + 's');
+            stamped = u.toString();
+          } else {
+            stamped = url + (url.includes('?') ? '&' : '?') + 't=' + startSec;
+          }
+        } catch (e) { /* keep raw */ }
+        document.getElementById('clipLink').textContent = stamped;
+        linkRow.style.display = 'block';
+      } else {
+        linkRow.style.display = 'none';
+      }
+
+      const billTag = b.bill.replace(/\s/g, '');
+      document.getElementById('capLinkedin').textContent =
+`I testified before the Virginia General Assembly on ${b.bill} — ${b.title}.
+
+I'm not a lobbyist. I'm a business owner. But decisions made in Richmond show up on my P&L, my staffing plan, and my prices — so I signed up, got my two minutes, and said my piece.
+
+If you run a business, you can do this too. It's easier than you think, and legislators genuinely listen to real constituents.
+
+#Virginia #GeneralAssembly #${billTag} #SmallBusiness #Advocacy`;
+
+      document.getElementById('capX').textContent =
+`I just testified before the VA General Assembly on ${b.bill} (${b.title}) — as a business owner, not a lobbyist.
+
+Your voice counts more than you think. Clip below. 🎥
+
+#VaLeg #${billTag}`;
+
+      document.getElementById('capIg').textContent =
+`POV: you testify at the state capitol from your kitchen 🎤
+
+This is ${b.bill} — ${b.title}. It affects my business, so I spoke up. No lobbyist. No law degree. Just showed up (virtually) and told my story.
+
+You can do this too — link in bio.
+
+#SmallBusinessOwner #${billTag} #Virginia #CivicTok #KnowYourPower`;
+
+      document.getElementById('clipResult').style.display = 'block';
+    }
+
+    function copyCaption(id) {
+      navigator.clipboard.writeText(document.getElementById(id).textContent);
+      alert('Caption copied!');
     }
 
     window.addEventListener('load', init);
