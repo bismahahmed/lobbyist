@@ -270,12 +270,131 @@
 
     .eyebrow + .section-title { margin-top: 0.2rem; }
 
-    .state-strip {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      margin-bottom: 1.3rem;
+    .nav-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
     }
+
+    .state-picker { position: relative; }
+
+    .sp-current {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--card);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      padding: 0.45rem 0.9rem 0.45rem 0.6rem;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .sp-current:hover { border-color: #A78BFA; }
+
+    .sp-current svg, .sp-item svg {
+      width: 24px; height: 24px;
+      stroke: #8B5CF6; fill: var(--lav-soft);
+      stroke-width: 3.4; stroke-linejoin: round; stroke-linecap: round;
+    }
+
+    .sp-current .sp-name { font-weight: 700; font-size: 13px; color: var(--ink); }
+    .sp-current .sp-tag, .sp-item .sp-tag {
+      font-size: 8.5px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-faint);
+      background: var(--bg); border-radius: 999px; padding: 0.15rem 0.5rem;
+    }
+    .sp-current .sp-tag.live, .sp-item .sp-tag.live { color: var(--mint); background: var(--mint-soft); }
+    .sp-current i { font-size: 11px; color: var(--ink-faint); }
+
+    .sp-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(34, 40, 59, 0.18);
+      padding: 6px;
+      min-width: 210px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: all 0.18s ease;
+      z-index: 200;
+    }
+
+    .state-picker:hover .sp-menu, .sp-menu.open {
+      opacity: 1; visibility: visible; transform: none;
+    }
+
+    .sp-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      background: none;
+      border: none;
+      border-radius: 11px;
+      padding: 0.5rem 0.7rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .sp-item:hover { background: var(--lav-soft); }
+    .sp-item .sp-tag { margin-left: auto; }
+
+    /* SAMPLE PEEK */
+    .peek-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 1.6rem; align-items: center; }
+    @media (max-width: 560px) { .peek-grid { grid-template-columns: 1fr; } }
+
+    .peek-eyebrow {
+      font-size: 10.5px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;
+      background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .peek-grid h3 { font-family: var(--font-display); font-size: 21px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .peek-grid p { font-size: 13px; color: var(--ink-soft); margin-bottom: 0.9rem; }
+
+    .peek-list { list-style: none; margin-bottom: 1.2rem; }
+    .peek-list li { display: flex; gap: 8px; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 0.4rem; }
+    .peek-list li i { color: var(--mint); margin-top: 3px; font-size: 11px; }
+
+    .mini-report {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(34, 40, 59, 0.08), 0 20px 44px rgba(34, 40, 59, 0.18);
+      overflow: hidden;
+      transform: rotate(2deg);
+      border: 1px solid var(--line);
+    }
+
+    .mini-head { background: linear-gradient(120deg, #22283B, #2C2A4E); padding: 0.9rem 1rem; }
+    .mini-head .mh-brand { display: flex; align-items: center; gap: 5px; font-size: 8px; font-weight: 800; color: #A9B1C9; letter-spacing: 0.08em; margin-bottom: 0.45rem; }
+    .mini-head .mh-brand .b { width: 12px; height: 12px; border-radius: 4px; background: var(--grad); display: inline-block; }
+    .mini-head .mh-title { height: 8px; width: 85%; border-radius: 4px; background: rgba(255,255,255,0.85); margin-bottom: 5px; }
+    .mini-head .mh-sub { height: 5px; width: 55%; border-radius: 3px; background: rgba(255,255,255,0.35); }
+
+    .mini-body { padding: 0.85rem 1rem 1rem; }
+    .mini-stats { display: flex; gap: 6px; margin-bottom: 0.8rem; }
+    .mini-stat { flex: 1; background: #F6F7FB; border-radius: 8px; padding: 0.45rem 0.3rem; text-align: center; }
+    .mini-stat .n { font-family: var(--font-display); font-weight: 800; font-size: 13px; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .mini-stat .l { height: 4px; width: 80%; margin: 4px auto 0; background: #E4E6EF; border-radius: 2px; }
+
+    .mini-sec { height: 6px; width: 45%; background: var(--lav-soft); border-left: 3px solid #8B5CF6; margin: 0.7rem 0 0.5rem; border-radius: 2px; }
+    .mini-line { height: 5px; border-radius: 3px; background: #EEF0F6; margin-bottom: 5px; }
+    .mini-line.short { width: 70%; }
 
     .state-tile {
       display: flex;
@@ -1613,9 +1732,9 @@
         <div class="brand-mark"><i class="fas fa-bolt"></i></div>
         <div>Lobbyist<span class="iq">IQ</span></div>
       </div>
-      <div class="nav-status">
-        <span class="pulse-dot"></span>
-        <span id="navSession">Live · Virginia 2026</span>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span class="nav-live"><span class="pulse-dot"></span> LIVE</span>
+        <div class="state-picker" id="statePicker"></div>
       </div>
     </nav>
 
@@ -1629,7 +1748,6 @@
       <!-- HERO -->
       <div class="hero">
         <div class="hero-copy">
-          <div class="state-strip" id="stateStrip"></div>
           <div class="hero-kicker"><i class="fas fa-graduation-cap"></i> The friendliest place to start if you know nothing about politics</div>
           <h1>Politics feels complicated.<br><span class="grad">It doesn't have to be.</span></h1>
           <p>Every Virginia bill turned into a short summary with bullet points — what changed, what it costs you, and exactly how to speak up. No law degree. No lobbyist. You've got this.</p>
@@ -2176,6 +2294,53 @@
     </div>
   </div>
 
+  <!-- SAMPLE PEEK MODAL -->
+  <div id="samplePeek" class="modal">
+    <div class="modal-content" style="max-width: 640px;">
+      <div class="modal-header" style="margin-bottom: 1.1rem;">
+        <h2>Your laws, on one page</h2>
+        <button class="modal-close" onclick="closePeek()"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="peek-grid">
+        <div>
+          <div class="peek-eyebrow">Free · takes 30 seconds</div>
+          <h3>Get a personalized impact report for your business</h3>
+          <p>Tell us four things and we build your one-page briefing from real Virginia law.</p>
+          <ul class="peek-list">
+            <li><i class="fas fa-check"></i> The exact laws that affect you — with links to the real text</li>
+            <li><i class="fas fa-check"></i> Deadlines, so nothing sneaks up on you</li>
+            <li><i class="fas fa-check"></i> A simple action plan — print it or save as PDF</li>
+          </ul>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-grad" onclick="closePeek(); openReportModal();" style="font-size: 12.5px;">Create my report</button>
+            <button class="btn btn-ghost" onclick="closePeek(); showSampleReport();" style="font-size: 12.5px;">See a full sample</button>
+          </div>
+        </div>
+        <div class="mini-report" aria-hidden="true">
+          <div class="mini-head">
+            <div class="mh-brand"><span class="b"></span> LOBBYISTIQ · IMPACT REPORT</div>
+            <div class="mh-title"></div>
+            <div class="mh-sub"></div>
+          </div>
+          <div class="mini-body">
+            <div class="mini-stats">
+              <div class="mini-stat"><div class="n">88</div><div class="l"></div></div>
+              <div class="mini-stat"><div class="n">34</div><div class="l"></div></div>
+              <div class="mini-stat"><div class="n">25</div><div class="l"></div></div>
+            </div>
+            <div class="mini-sec"></div>
+            <div class="mini-line"></div>
+            <div class="mini-line short"></div>
+            <div class="mini-line"></div>
+            <div class="mini-sec"></div>
+            <div class="mini-line"></div>
+            <div class="mini-line short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- REPORT FORM MODAL -->
   <div id="reportModal" class="modal">
     <div class="modal-content" style="max-width: 520px;">
@@ -2411,7 +2576,7 @@
       initTilt();
       if (!localStorage.getItem('lqSampleSeen')) {
         localStorage.setItem('lqSampleSeen', '1');
-        setTimeout(showSampleReport, 1600);
+        setTimeout(() => document.getElementById('samplePeek').classList.add('active'), 1400);
       }
     }
 
@@ -2454,7 +2619,6 @@
       renderSyncBadge();
       renderStateStrip();
       updateTrustStrip();
-      document.getElementById('navSession').textContent = `Live · ${STATES[selectedState]} 2026`;
     }
 
     let trustAnimated = false;
@@ -3302,16 +3466,31 @@ You can do this too — link in bio.
     };
 
     function renderStateStrip() {
-      const el = document.getElementById('stateStrip');
+      const el = document.getElementById('statePicker');
       if (!el) return;
-      el.innerHTML = Object.keys(STATES).map(code => `
-        <button class="state-tile ${code === selectedState ? 'active' : ''}" onclick="pickState('${code}')" aria-label="${STATES[code]}">
-          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="${STATE_SHAPES[code] || ''}"/></svg>
-          <span class="st-abbr">${code}</span>
-          <span class="st-tag">${code === 'VA' ? 'Live data' : 'Sample'}</span>
+      const tag = (code) => code === 'VA'
+        ? '<span class="sp-tag live">Live data</span>'
+        : '<span class="sp-tag">Sample</span>';
+      el.innerHTML = `
+        <button class="sp-current" onclick="document.getElementById('spMenu').classList.toggle('open')" aria-label="Change state">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><path d="${STATE_SHAPES[selectedState] || ''}"/></svg>
+          <span class="sp-name">${STATES[selectedState]}</span>
+          ${tag(selectedState)}
+          <i class="fas fa-chevron-down"></i>
         </button>
-      `).join('');
+        <div class="sp-menu" id="spMenu">
+          ${Object.keys(STATES).filter(c => c !== selectedState).map(code => `
+            <button class="sp-item" onclick="pickState('${code}')">
+              <svg viewBox="0 0 64 64" aria-hidden="true"><path d="${STATE_SHAPES[code] || ''}"/></svg>
+              ${STATES[code]}
+              ${tag(code)}
+            </button>
+          `).join('')}
+        </div>
+      `;
     }
+
+    function closePeek() { document.getElementById('samplePeek').classList.remove('active'); }
 
     function pickState(code) {
       selectedState = code;
