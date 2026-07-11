@@ -13,13 +13,13 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #F7F5FF;
+      --bg: #F4F5FA;
       --card: #FFFFFF;
       --ink: #22283B;
       --ink-soft: #5C6478;
       --ink-faint: #9098AC;
-      --line: #EAE5F6;
-      --line-strong: #D8D1EA;
+      --line: #E8E9F2;
+      --line-strong: #D9DBE8;
       --coral: #FF5E62;
       --coral-deep: #E23E4E;
       --coral-soft: #FFE7E0;
@@ -43,7 +43,7 @@
 
     body {
       font-family: 'Inter', -apple-system, sans-serif;
-      background: linear-gradient(165deg, #EFEAFF 0%, #FFEDF3 30%, #FFF4E4 55%, #E8F8F1 85%, #E9F1FF 100%) fixed;
+      background: linear-gradient(180deg, #F7F8FC 0%, #FBFBFE 45%, #F4F5FA 100%) fixed;
       color: var(--ink);
       line-height: 1.65;
       min-height: 100vh;
@@ -56,11 +56,9 @@
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(620px 440px at 90% -6%, rgba(255, 182, 72, 0.28), transparent 60%),
-        radial-gradient(580px 440px at 102% 32%, rgba(241, 91, 181, 0.20), transparent 60%),
-        radial-gradient(700px 500px at -12% 18%, rgba(155, 93, 229, 0.22), transparent 60%),
-        radial-gradient(580px 460px at 12% 102%, rgba(79, 208, 198, 0.22), transparent 60%),
-        radial-gradient(540px 420px at 72% 106%, rgba(47, 128, 237, 0.16), transparent 60%);
+        radial-gradient(720px 480px at 88% -8%, rgba(255, 94, 98, 0.07), transparent 60%),
+        radial-gradient(760px 540px at -14% 22%, rgba(155, 93, 229, 0.07), transparent 60%),
+        radial-gradient(640px 480px at 55% 108%, rgba(79, 208, 198, 0.06), transparent 60%);
     }
 
     .page { position: relative; z-index: 1; }
@@ -73,9 +71,9 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+      border-bottom: 1px solid var(--line);
       backdrop-filter: blur(14px);
-      background: rgba(250, 248, 255, 0.72);
+      background: rgba(251, 251, 254, 0.8);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -911,33 +909,73 @@
     .source-chip i { font-size: 11px; }
 
     /* HOW IT WORKS */
-    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 2.4rem; }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 2.4rem;
+      perspective: 1200px;
+    }
 
     .how-card {
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 1.4rem 1.4rem 1.5rem;
+      border-radius: 22px;
+      padding: 1.5rem 1.5rem 1.6rem;
       box-shadow: var(--shadow);
       position: relative;
-      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      will-change: transform;
     }
 
-    .how-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+    .how-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 6px;
+      background: var(--bar, var(--grad));
+    }
+
+    .how-card:nth-child(1) { --bar: linear-gradient(90deg, #FF8A65, #FF5E62); }
+    .how-card:nth-child(2) { --bar: linear-gradient(90deg, #4FD0C6, #2F80ED); }
+    .how-card:nth-child(3) { --bar: linear-gradient(90deg, #FFC24B, #E8A400); }
+    .how-card:nth-child(4) { --bar: linear-gradient(90deg, #C77DFF, #9B5DE5); }
+
+    .how-card:hover { box-shadow: 0 10px 24px rgba(34, 40, 59, 0.10), 0 30px 70px rgba(34, 40, 59, 0.16); }
 
     .how-num {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      border-radius: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Nunito', sans-serif;
       font-weight: 900;
-      font-size: 15px;
+      font-size: 19px;
       color: white;
-      margin-bottom: 0.9rem;
+      margin-bottom: 0.95rem;
+      box-shadow: 0 8px 18px rgba(34, 40, 59, 0.18);
+      transform: translateZ(30px);
+      animation: bob 3.2s ease-in-out infinite;
     }
+
+    .how-card:nth-child(2) .how-num { animation-delay: 0.4s; }
+    .how-card:nth-child(3) .how-num { animation-delay: 0.8s; }
+    .how-card:nth-child(4) .how-num { animation-delay: 1.2s; }
+
+    @keyframes bob {
+      0%, 100% { transform: translateZ(30px) translateY(0); }
+      50% { transform: translateZ(30px) translateY(-5px); }
+    }
+
+    .how-card .how-title, .how-card .how-desc { transform: translateZ(16px); }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.3, 1), transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1); }
+    .reveal.in { opacity: 1; transform: none; }
 
     .how-title { font-family: 'Nunito', sans-serif; font-size: 15.5px; font-weight: 800; margin-bottom: 0.4rem; }
     .how-desc { font-size: 13px; color: var(--ink-soft); }
@@ -1926,6 +1964,36 @@
       document.getElementById('stateFilter').addEventListener('change', (e) => {
         selectedState = e.target.value;
         renderAll();
+      });
+      initReveal();
+      initTilt();
+    }
+
+    function initReveal() {
+      const targets = document.querySelectorAll('.how-card, .watch-card, .community-card, .pipe-card, .trust-strip, .section-title, .pipe-legend');
+      targets.forEach((el, i) => {
+        el.classList.add('reveal');
+        el.style.transitionDelay = (i % 4) * 0.07 + 's';
+      });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.15 });
+      targets.forEach(el => io.observe(el));
+    }
+
+    function initTilt() {
+      document.querySelectorAll('.how-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateY(-4px) scale(1.02)`;
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
       });
     }
 
