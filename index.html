@@ -531,6 +531,82 @@
 
     .bill-summary { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 1rem; max-width: 760px; }
 
+    .bill-bullets { list-style: none; margin: 0 0 1rem; max-width: 760px; }
+
+    .bill-bullets li {
+      display: flex;
+      gap: 9px;
+      font-size: 13.5px;
+      color: var(--ink-soft);
+      margin-bottom: 0.45rem;
+      line-height: 1.55;
+    }
+
+    .bill-bullets li i {
+      color: var(--mint);
+      background: var(--mint-soft);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* GUIDED TOUR */
+    .tour-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(34, 40, 59, 0.55);
+      z-index: 2000;
+      display: none;
+    }
+
+    .tour-overlay.active { display: block; }
+
+    .tour-ring {
+      position: absolute;
+      border: 3px solid #FFC24B;
+      border-radius: 18px;
+      box-shadow: 0 0 0 6px rgba(255, 194, 75, 0.35), 0 0 40px rgba(255, 194, 75, 0.5);
+      background: transparent;
+      pointer-events: none;
+      transition: all 0.35s ease;
+    }
+
+    .tour-tip {
+      position: absolute;
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: 0 24px 70px rgba(34, 40, 59, 0.35);
+      padding: 1.3rem 1.4rem;
+      max-width: 340px;
+      transition: all 0.35s ease;
+    }
+
+    .tour-step-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: white;
+      background: var(--grad);
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .tour-tip h3 { font-family: 'Nunito', sans-serif; font-size: 16.5px; font-weight: 800; margin-bottom: 0.35rem; }
+    .tour-tip p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 1rem; }
+    .tour-tip-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .tour-tip-actions .btn { font-size: 12.5px; padding: 0.5rem 1rem; }
+
     .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.1rem; }
 
     .impact-item {
@@ -1037,10 +1113,13 @@
 
       <!-- HERO -->
       <div class="hero">
-        <div class="hero-kicker"><i class="fas fa-heart"></i> For people who aren't lobbyists · nonpartisan, always</div>
+        <div class="hero-kicker"><i class="fas fa-graduation-cap"></i> The friendliest place to start if you know nothing about politics</div>
         <h1>Politics feels complicated.<br><span class="grad">It doesn't have to be.</span></h1>
-        <p>Real Virginia bills in plain English — what changed, what it means for you, and exactly how to speak up. No law degree. No lobbyist. You've got this.</p>
-        <div class="selectors">
+        <p>Every Virginia bill turned into a short summary with bullet points — what changed, what it costs you, and exactly how to speak up. No law degree. No lobbyist. You've got this.</p>
+        <div class="selectors" style="align-items: center;">
+          <button class="btn btn-grad" onclick="startTour()" style="font-size: 13px;"><i class="fas fa-wand-magic-sparkles"></i> Take the 30-second tour</button>
+        </div>
+        <div class="selectors" style="margin-top: 10px;">
           <select id="stateFilter">
             <option value="VA">Virginia</option>
             <option value="MD">Maryland</option>
@@ -1069,8 +1148,8 @@
         </div>
         <div class="how-card">
           <div class="how-num" style="background: linear-gradient(135deg,#4FD0C6,#2F80ED);">2</div>
-          <div class="how-title">Read it in plain English</div>
-          <div class="how-desc">What changed, what it costs or saves you, and when it kicks in — no legal jargon.</div>
+          <div class="how-title">Get the quick version</div>
+          <div class="how-desc">Every bill becomes a short summary with bullet points — what changed, what it costs, when it hits. No 40-page reading.</div>
         </div>
         <div class="how-card">
           <div class="how-num" style="background: linear-gradient(135deg,#FFC24B,#E8A400);">3</div>
@@ -1659,25 +1738,40 @@
       document.getElementById('metricsContainer').innerHTML = `
         <div class="metric">
           <div class="metric-label">Bills that matter to you</div>
-          <div class="metric-value">${bills.length}</div>
+          <div class="metric-value" data-count="${bills.length}">0</div>
           <div class="metric-sub ${enacted.length ? 'alert' : ''}">${enacted.length} became law</div>
         </div>
         <div class="metric">
           <div class="metric-label">Now in effect</div>
-          <div class="metric-value">${nowLaw}</div>
+          <div class="metric-value" data-count="${nowLaw}">0</div>
           <div class="metric-sub">${nextEffective(enacted, today)}</div>
         </div>
         <div class="metric">
           <div class="metric-label">Coming back</div>
-          <div class="metric-value">${comingBack}</div>
+          <div class="metric-value" data-count="${comingBack}">0</div>
           <div class="metric-sub">Carried over / still moving</div>
         </div>
         <div class="metric">
           <div class="metric-label">People like you here</div>
-          <div class="metric-value">${allies}</div>
+          <div class="metric-value" data-count="${allies}">0</div>
           <div class="metric-sub">In your industry</div>
         </div>
       `;
+      animateCounters();
+    }
+
+    function animateCounters() {
+      document.querySelectorAll('.metric-value[data-count]').forEach(el => {
+        const target = parseInt(el.dataset.count, 10);
+        const dur = 700;
+        const t0 = performance.now();
+        function tick(t) {
+          const p = Math.min((t - t0) / dur, 1);
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
     }
 
     function nextEffective(enacted, today) {
@@ -1751,6 +1845,38 @@
       }
     }
 
+    function bulletize(summary) {
+      if (!summary) return '';
+      // Drop the leading title repetition ("Short title; details. More details.")
+      let text = summary;
+      const semi = text.indexOf(';');
+      if (semi > -1 && semi < 90) text = text.slice(semi + 1).trim();
+
+      // First try full sentences
+      const sentences = (text.match(/[^.!?]+[.!?]+/g) || [text]).map(s => s.trim());
+      let bullets = sentences.filter(s => s.length > 20);
+
+      // LIS often writes one long clause list — split on semicolons/commas instead
+      if (bullets.length < 2) {
+        const clauses = text.replace(/\.$/, '').split(/;\s*/).map(c => c.trim()).filter(c => c.length > 3);
+        if (clauses.length >= 2) bullets = clauses;
+      }
+
+      bullets = bullets.slice(0, 3).map(b => {
+        b = b.replace(/^[,;\s]+/, '');
+        b = b.charAt(0).toUpperCase() + b.slice(1);
+        if (!/[.!?]$/.test(b)) b += '.';
+        return b;
+      });
+
+      if (!bullets.length || (bullets.length === 1 && bullets[0].length < 30)) {
+        return `<div class="bill-summary">${summary}</div>`;
+      }
+      return `<ul class="bill-bullets">` +
+        bullets.map(b => `<li><i class="fas fa-check"></i><span>${b}</span></li>`).join('') +
+        `</ul>`;
+    }
+
     function catChipClass(category) {
       const map = {
         'Labor': 'cat-labor',
@@ -1791,7 +1917,7 @@
               </div>
             </div>
           </div>
-          <div class="bill-summary">${bill.summary}</div>
+          ${bulletize(bill.summary)}
           <div class="impact-grid">
             <div class="impact-item">
               <div class="impact-label">What it means for you</div>
@@ -2263,6 +2389,102 @@ You can do this too — link in bio.
     function copyCaption(id) {
       navigator.clipboard.writeText(document.getElementById(id).textContent);
       alert('Caption copied!');
+    }
+
+    // ===== GUIDED TOUR =====
+    const TOUR_STEPS = [
+      {
+        target: () => document.getElementById('stateFilter'),
+        title: 'Start with where you live',
+        text: 'Pick your state and your industry. We scan every single bill — 3,646 in Virginia this year — and only show you the ones that touch your world.'
+      },
+      {
+        target: () => document.querySelector('.sync-badge'),
+        title: 'This is real, live data',
+        text: 'Everything here comes straight from Virginia\'s official legislative system. When Richmond moves, this page moves.'
+      },
+      {
+        target: () => document.querySelector('.bill-card'),
+        title: 'Bills become bullet points',
+        text: 'No 40-page PDFs. Every bill gets a short summary with bullet points: what changed, what it means for you, and when it kicks in.'
+      },
+      {
+        target: () => document.querySelector('.bill-card .btn-grad'),
+        title: 'Speak up — from your kitchen',
+        text: 'The Testify button walks you through signing up to speak to lawmakers remotely, and even helps you write your 60-second script.'
+      },
+      {
+        target: () => document.querySelector('.watch-grid'),
+        title: 'Watch it all happen live',
+        text: 'Committees stream on YouTube. Watch one before you speak — you\'ll see how normal everyone sounds. Then go be one of them.'
+      }
+    ];
+
+    let tourIndex = 0;
+    let tourEls = null;
+
+    function ensureTourEls() {
+      if (tourEls) return tourEls;
+      const overlay = document.createElement('div');
+      overlay.className = 'tour-overlay';
+      overlay.innerHTML = '<div class="tour-ring"></div><div class="tour-tip"></div>';
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) endTour(); });
+      document.body.appendChild(overlay);
+      tourEls = { overlay, ring: overlay.querySelector('.tour-ring'), tip: overlay.querySelector('.tour-tip') };
+      return tourEls;
+    }
+
+    function startTour() {
+      tourIndex = 0;
+      ensureTourEls().overlay.classList.add('active');
+      showTourStep();
+    }
+
+    function endTour() {
+      if (tourEls) tourEls.overlay.classList.remove('active');
+    }
+
+    function nextTourStep() {
+      tourIndex++;
+      if (tourIndex >= TOUR_STEPS.length) { endTour(); return; }
+      showTourStep();
+    }
+
+    function showTourStep() {
+      const step = TOUR_STEPS[tourIndex];
+      const target = step.target();
+      if (!target) { nextTourStep(); return; }
+
+      document.documentElement.style.scrollBehavior = 'auto';
+      target.scrollIntoView({ block: 'center' });
+
+      requestAnimationFrame(() => {
+        const { ring, tip } = ensureTourEls();
+        const r = target.getBoundingClientRect();
+        const pad = 8;
+        ring.style.left = (r.left - pad) + 'px';
+        ring.style.top = (r.top - pad) + 'px';
+        ring.style.width = (r.width + pad * 2) + 'px';
+        ring.style.height = (r.height + pad * 2) + 'px';
+
+        const last = tourIndex === TOUR_STEPS.length - 1;
+        tip.innerHTML = `
+          <span class="tour-step-label"><i class="fas fa-wand-magic-sparkles"></i> Step ${tourIndex + 1} of ${TOUR_STEPS.length}</span>
+          <h3>${step.title}</h3>
+          <p>${step.text}</p>
+          <div class="tour-tip-actions">
+            <button class="btn btn-ghost" onclick="endTour()">Skip</button>
+            <button class="btn btn-grad" onclick="nextTourStep()">${last ? "Let's go!" : 'Next'}</button>
+          </div>
+        `;
+
+        const tipH = 210;
+        let top = r.bottom + pad + 14;
+        if (top + tipH > window.innerHeight) top = Math.max(16, r.top - pad - tipH);
+        let left = Math.min(Math.max(16, r.left), window.innerWidth - 360);
+        tip.style.top = top + 'px';
+        tip.style.left = left + 'px';
+      });
     }
 
     window.addEventListener('load', init);
