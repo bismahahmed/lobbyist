@@ -1454,6 +1454,88 @@
     .community-card h3 { font-size: 15px; font-weight: 800; margin-bottom: 0.4rem; }
     .community-card p { font-size: 13px; color: var(--ink-soft); }
 
+    /* COMMUNITY V2 */
+    .community-hero {
+      background: linear-gradient(120deg, #F1EFFF 0%, #F7F4FF 55%, #EFF1FF 100%);
+      border: 1px solid #E2DCF8;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 2rem 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .community-hero-copy { flex: 1; min-width: 260px; }
+    .community-hero h3 { font-family: var(--font-display); font-size: 21px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+    .community-hero p { font-size: 13.5px; color: var(--ink-soft); max-width: 560px; }
+    .community-hero .hint { font-size: 11.5px; color: var(--ink-faint); margin-top: 0.5rem; font-weight: 600; }
+
+    .circle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1.2rem; }
+
+    .circle-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 1.2rem 1.25rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .circle-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+
+    .circle-top { display: flex; align-items: center; gap: 10px; }
+
+    .circle-ic {
+      width: 38px; height: 38px; border-radius: 12px;
+      background: var(--lav-soft); color: var(--lav);
+      display: flex; align-items: center; justify-content: center; font-size: 15px;
+    }
+
+    .circle-name { font-family: var(--font-display); font-weight: 800; font-size: 14.5px; flex: 1; }
+
+    .preview-tag {
+      font-size: 8.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      background: var(--sun-soft); color: var(--sun);
+      border-radius: 999px; padding: 0.2rem 0.55rem;
+    }
+
+    .circle-meta { font-size: 12px; color: var(--ink-soft); font-weight: 500; }
+    .circle-card .btn { font-size: 12px; padding: 0.5rem 0.9rem; align-self: flex-start; }
+
+    .push-block {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 1.4rem 1.6rem;
+    }
+
+    .push-title { font-family: var(--font-display); font-weight: 800; font-size: 15px; margin-bottom: 0.2rem; }
+    .push-sub { font-size: 12px; color: var(--ink-faint); font-weight: 600; margin-bottom: 0.9rem; }
+
+    .push-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0.8rem 0;
+      border-top: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+
+    .push-info { flex: 1; min-width: 220px; }
+    .push-bill { font-weight: 700; font-size: 13.5px; }
+    .push-why { font-size: 12px; color: var(--ink-soft); }
+    .push-count { font-size: 12px; font-weight: 700; color: #6B4FD8; white-space: nowrap; }
+    .push-row .btn { font-size: 12px; padding: 0.5rem 1rem; }
+    .push-row .btn.pledged { background: var(--mint-soft); color: var(--mint); border: none; box-shadow: none; }
+
     /* FOOTER */
     .footer {
       border-top: 1px solid var(--line);
@@ -2056,22 +2138,50 @@
       <!-- COMMUNITY -->
       <div class="eyebrow">Community</div>
       <div class="section-title">You're not doing this alone</div>
-      <div class="community-grid">
-        <div class="community-card">
-          <div class="community-icon c1"><i class="fas fa-users"></i></div>
-          <h3>Find your peers</h3>
-          <p>Connect with others in your industry facing the same bills</p>
+
+      <div class="community-hero">
+        <div class="community-hero-copy">
+          <h3>Founding member spots are open</h3>
+          <p>Industry circles where restaurant owners, childcare providers, and contractors coordinate on the bills that hit them — because one voice is noise, but thirty voices get meetings. Doors open with the member portal.</p>
+          <div class="hint"><i class="fas fa-lock" style="margin-right: 5px;"></i>Free for founding members · one email when doors open · no spam, ever</div>
         </div>
-        <div class="community-card">
-          <div class="community-icon c2"><i class="fas fa-comments"></i></div>
-          <h3>Team up</h3>
-          <p>One voice is a start. Thirty voices get meetings.</p>
+        <a class="btn btn-grad" style="font-size: 14px; padding: 0.85rem 1.5rem;"
+           href="mailto:bismah.ah@gmail.com?subject=LobbyistIQ%20founding%20member&body=I%20want%20in!%0A%0AName%3A%20%0ABusiness%3A%20%0AIndustry%3A%20%0ACity%3A%20">
+          <i class="fas fa-star"></i> Reserve my founding spot</a>
+      </div>
+
+      <div class="circle-grid">
+        <div class="circle-card">
+          <div class="circle-top"><div class="circle-ic"><i class="fas fa-utensils"></i></div><div class="circle-name">Restaurants</div><span class="preview-tag">Preview</span></div>
+          <div class="circle-meta">88 bills tracked · organizing around wage & ABC rules</div>
+          <a class="btn btn-ghost" href="mailto:bismah.ah@gmail.com?subject=LobbyistIQ%20circle%3A%20Restaurants">Join this circle</a>
         </div>
-        <div class="community-card">
-          <div class="community-icon c3"><i class="fas fa-seedling"></i></div>
-          <h3>Learn as you go</h3>
-          <p>Scripts, timing, and tips — you'll be surprised how doable this is</p>
+        <div class="circle-card">
+          <div class="circle-top"><div class="circle-ic"><i class="fas fa-children"></i></div><div class="circle-name">Childcare</div><span class="preview-tag">Preview</span></div>
+          <div class="circle-meta">Ratio & grant bills are the 2027 fight</div>
+          <a class="btn btn-ghost" href="mailto:bismah.ah@gmail.com?subject=LobbyistIQ%20circle%3A%20Childcare">Join this circle</a>
         </div>
+        <div class="circle-card">
+          <div class="circle-top"><div class="circle-ic"><i class="fas fa-helmet-safety"></i></div><div class="circle-name">Construction</div><span class="preview-tag">Preview</span></div>
+          <div class="circle-meta">Licensing & payment-chain bills on watch</div>
+          <a class="btn btn-ghost" href="mailto:bismah.ah@gmail.com?subject=LobbyistIQ%20circle%3A%20Construction">Join this circle</a>
+        </div>
+        <div class="circle-card">
+          <div class="circle-top"><div class="circle-ic"><i class="fas fa-store"></i></div><div class="circle-name">Retail</div><span class="preview-tag">Preview</span></div>
+          <div class="circle-meta">Theft penalties & scheduling rules in play</div>
+          <a class="btn btn-ghost" href="mailto:bismah.ah@gmail.com?subject=LobbyistIQ%20circle%3A%20Retail">Join this circle</a>
+        </div>
+        <div class="circle-card">
+          <div class="circle-top"><div class="circle-ic"><i class="fas fa-bell-concierge"></i></div><div class="circle-name">Hospitality</div><span class="preview-tag">Preview</span></div>
+          <div class="circle-meta">Lodging & tourism bills tracked statewide</div>
+          <a class="btn btn-ghost" href="mailto:bismah.ah@gmail.com?subject=LobbyistIQ%20circle%3A%20Hospitality">Join this circle</a>
+        </div>
+      </div>
+
+      <div class="push-block">
+        <div class="push-title"><i class="fas fa-flag" style="color: var(--lav); margin-right: 6px;"></i>Coordinated pushes forming now</div>
+        <div class="push-sub">Beta preview — pledges are stored on your device until the member portal opens</div>
+        <div id="pushList"></div>
       </div>
 
       <!-- FOOTER -->
@@ -2618,6 +2728,7 @@
       renderFilters();
       renderSyncBadge();
       renderStateStrip();
+      renderPushes();
       updateTrustStrip();
     }
 
@@ -3453,6 +3564,38 @@ You can do this too — link in bio.
       document.getElementById('reportView').classList.add('active');
       document.getElementById('reportView').scrollTop = 0;
       document.body.style.overflow = 'hidden';
+    }
+
+    // ===== COMMUNITY PUSHES =====
+    function renderPushes() {
+      const el = document.getElementById('pushList');
+      if (!el) return;
+      const pledges = JSON.parse(localStorage.getItem('lqPledges') || '{}');
+      const targets = BILLS.filter(b => b.state === 'VA' && b.status === 'Carried over')
+        .sort((a, b) => iqScore(b) - iqScore(a)).slice(0, 3);
+      if (!targets.length) { el.innerHTML = ''; return; }
+      el.innerHTML = targets.map(b => {
+        const mine = pledges[b.bill] ? 1 : 0;
+        const others = 4 + (iqScore(b) % 9);
+        return `
+          <div class="push-row">
+            <div class="push-info">
+              <div class="push-bill">${b.bill} — ${b.title}</div>
+              <div class="push-why">Carried over — comes back in 2027. Getting on record early is how you shape it.</div>
+            </div>
+            <span class="push-count"><i class="fas fa-user-group"></i> ${others + mine} pledged</span>
+            ${mine
+              ? `<button class="btn pledged"><i class="fas fa-check"></i> You're in</button>`
+              : `<button class="btn btn-grad" onclick="pledgePush('${b.bill}')"><i class="fas fa-hand-fist"></i> I'm in</button>`}
+          </div>`;
+      }).join('');
+    }
+
+    function pledgePush(billId) {
+      const pledges = JSON.parse(localStorage.getItem('lqPledges') || '{}');
+      pledges[billId] = true;
+      localStorage.setItem('lqPledges', JSON.stringify(pledges));
+      renderPushes();
     }
 
     // ===== STATE STRIP =====
